@@ -1,0 +1,74 @@
+Using Mesen's memory tools to look at PRG ROM...
+________________________________________________
+
+0x00F80: Starting stats, $80 per character. First $40 is stats, next $40 is skills.
+0x01100: Starting stats for 4th slot charactes. 
+	End: 0x0137F
+
+
+0x28600: Start of dialogue.
+	End: 0x2A785
+
+0x2A786; Start of item names.
+  2A8F2: Some key words: Hellfire, Fynn, Unarmed, Buckler, Bronze, Mythril, Golden, Ice, Flame, Diamond, Dragon, Aegis
+  2A940: Start of weapon names.
+  2AAAC: Start of armor names.
+  2ABC8: Start of spellbooks.
+  2AAC3: Start of spell names.
+  2AD88: More key words: Treasure, Remove, Exit, Gordon, "Who will use it?", Princess, Dark Knight, Hilda, Emperor
+  2ADC8: Start of passwords.
+
+0x2Ae53: Various messages, shopkeeper strings.
+
+0x2B0E6: Ask, Learn, Items
+
+0x2B0F9: Start menu strings.
+
+0x2B177: Equip menu strings.
+
+0x2B26C: Magic menu strings-- Maybe codes for showing stars and MP cost.
+
+0x2B2F8: Status menu strings.
+
+0x2B3E8: Save menu strings.
+
+0x2B45C8: Spell and item message strings.
+
+	Emd: 0x2B644
+
+Then there's pointers, "You can't use this" message, the letters for choosing your name, a few more strings of map dialogue for using shrines and stuff...
+
+0x2B8E6: Intro text!
+	End: 0x2B9E7
+
+Battle strings...? Some blank space, more pointers it looks like, and then some repeats of the "You can't use this" and name screen letters. More repeats of things, lots of gibberish, and maybe some used battle strings for surprise attacks?
+
+0x2BFAB: Short ailment strings.
+
+
+
+
+
+
+
+
+
+0x3470E: Pirate attack cutscene dialogue.
+      ^
+      assumes $00 is NOT start of a dialogue string, else its 1 less
+      v 
+0x348D2: Starting cutscene dialogues.
+	End: 0x357FB
+
+
+
+
+
+Name codes: 
+  07 = Leon
+  00 10 02 = Firion
+  00 11 02 = Maria
+  00 12 02 = Guy
+  18 = Item code, followed by item ID. Uses keywords in Item list.
+
+

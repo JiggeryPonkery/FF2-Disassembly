@@ -6,6 +6,18 @@ battlestat_pointer = $80 ; 2 bytes ; Pointer to Temp Battle Stats ($7D7A)
 charstat_pointer2  = $A1 ; 2 bytes ; Mixed pointer? A1 = 7A, A2 = 81
 
 
+
+
+
+;; Some kind of dialogue text buffer/box drawing stuff at $0780-07FF
+
+
+
+
+
+
+
+
 ;; Save RAM ;; 
 
 sram_1                   = $6300
