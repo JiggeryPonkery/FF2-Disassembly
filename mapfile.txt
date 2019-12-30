@@ -1,0 +1,68 @@
+Modules list:
+-------------
+bank_00.o:
+    BANK_00           Offs = 000000   Size = 004010
+bank_01.o:
+    BANK_01           Offs = 000000   Size = 004000
+bank_02.o:
+    BANK_02           Offs = 000000   Size = 004000
+bank_03.o:
+    BANK_03           Offs = 000000   Size = 004000
+bank_04.o:
+    BANK_04           Offs = 000000   Size = 004000
+bank_05.o:
+    BANK_05           Offs = 000000   Size = 004000
+bank_06.o:
+    BANK_06           Offs = 000000   Size = 004000
+bank_07.o:
+    BANK_07           Offs = 000000   Size = 004000
+bank_08.o:
+    BANK_08           Offs = 000000   Size = 004000
+bank_09.o:
+    BANK_09           Offs = 000000   Size = 004000
+bank_0A.o:
+    BANK_0A           Offs = 000000   Size = 004000
+bank_0B.o:
+    BANK_0B           Offs = 000000   Size = 004000
+bank_0C.o:
+    BANK_0C           Offs = 000000   Size = 004000
+bank_0D.o:
+    BANK_0D           Offs = 000000   Size = 004000
+bank_0E.o:
+    BANK_0E           Offs = 000000   Size = 004000
+bank_0F.o:
+    BANK_FIXED        Offs = 000000   Size = 003FFA
+    VECTORS           Offs = 000000   Size = 000006
+
+
+Segment list:
+-------------
+Name                  Start   End     Size
+--------------------------------------------
+BANK_00               008000  00C00F  004010
+BANK_01               008000  00BFFF  004000
+BANK_02               008000  00BFFF  004000
+BANK_03               008000  00BFFF  004000
+BANK_04               008000  00BFFF  004000
+BANK_05               008000  00BFFF  004000
+BANK_06               008000  00BFFF  004000
+BANK_07               008000  00BFFF  004000
+BANK_08               008000  00BFFF  004000
+BANK_09               008000  00BFFF  004000
+BANK_0A               008000  00BFFF  004000
+BANK_0B               008000  00BFFF  004000
+BANK_0C               008000  00BFFF  004000
+BANK_0D               008000  00BFFF  004000
+BANK_0E               008000  00BFFF  004000
+BANK_FIXED            00C000  00FFF9  003FFA
+VECTORS               00FFFA  00FFFF  000006
+
+
+Exports list:
+-------------
+
+
+
+Imports list:
+-------------
+
