@@ -1,6 +1,12 @@
 .include "Constants.inc"
 .include "variables.inc"
 
+.export L3FD8C
+.export L3FA0F
+.export L3FD46
+.export L3FA2A
+.export L3FD5B
+
 .segment "BANK_FIXED"
 
     JMP $C025                ; C000  $4C $25 $C0
