@@ -1,11 +1,15 @@
 ;; Zero page ;; 
 
+tmp                = $00 ; $10 bytes I assume
+
+division_result    = $22
+
 charstat_pointer   = $7A ; 2 bytes
 charskill_pointer  = $7E ; 2 bytes
 battlestat_pointer = $80 ; 2 bytes ; Pointer to Temp Battle Stats ($7D7A)
 charstat_pointer2  = $A1 ; 2 bytes ; Mixed pointer? A1 = 7A, A2 = 81
 
-
+entity_counter     = $9E 
 
 
 
@@ -186,6 +190,24 @@ battle_min_mresist       = ch_skills + $32
 ;                        = ch_skills + $33
 ;                        = ch_skills + $34
 battle_row               = ch_skills + $35 ; $00 = back row, $01 = front row, $80 = no character portrait visible
+
+
+
+
+
+battle_result            = $7B48 ; not sure yet
+
+statup_confirmation      = $7B62 ; 8 bytes, all $FF during testing 
+; but the next $10 bytes are 3, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
+
+
+
+
+
+
+
+
+
 
 
 

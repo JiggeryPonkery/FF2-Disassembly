@@ -6,6 +6,7 @@
 .export L3FD46
 .export L3FA2A
 .export L3FD5B
+.export DoDivision
 
 .segment "BANK_FIXED"
 
@@ -7831,6 +7832,11 @@ L3FCB7:
     RTS                      ; FCC2  $60
 
 ;; sub start ;;
+
+;; NESDEV Discord, Learning Assistance: 
+;; abridgewater: And, yeah, it's $00/$01 divided by $02/$03, destroying $00/$01, quotient into $04/$05, remainder into $06/$07.
+
+DoDivision:
     LDA #$00                 ; FCC3  $A9 $00
     STA $05                  ; FCC5  $85 $05
     STA $04                  ; FCC7  $85 $04
@@ -7838,12 +7844,13 @@ L3FCB7:
     STA $06                  ; FCCB  $85 $06
     LDA $00                  ; FCCD  $A5 $00
     ORA $01                  ; FCCF  $05 $01
-    BEQ L3FD06               ; FCD1  $F0 $33
+    BEQ @End                 ; FCD1  $F0 $33
     LDA $02                  ; FCD3  $A5 $02
     ORA $03                  ; FCD5  $05 $03
-    BEQ L3FD06               ; FCD7  $F0 $2D
+    BEQ @End                 ; FCD7  $F0 $2D
     LDX #$10                 ; FCD9  $A2 $10
-L3FCDB:
+
+   @Loop:
     ROL $00                  ; FCDB  $26 $00
     ROL $01                  ; FCDD  $26 $01
     ROL $06                  ; FCDF  $26 $06
@@ -7855,7 +7862,7 @@ L3FCDB:
     LDA $07                  ; FCEA  $A5 $07
     SBC $03                  ; FCEC  $E5 $03
     STA $07                  ; FCEE  $85 $07
-    BCS L3FCFF               ; FCF0  $B0 $0D
+    BCS :+                   ; FCF0  $B0 $0D
     LDA $06                  ; FCF2  $A5 $06
     ADC $02                  ; FCF4  $65 $02
     STA $06                  ; FCF6  $85 $06
@@ -7863,12 +7870,13 @@ L3FCDB:
     ADC $03                  ; FCFA  $65 $03
     STA $07                  ; FCFC  $85 $07
     CLC                      ; FCFE  $18
-L3FCFF:
-    ROL $04                  ; FCFF  $26 $04
+
+  : ROL $04                  ; FCFF  $26 $04
     ROL $05                  ; FD01  $26 $05
     DEX                      ; FD03  $CA
-    BNE L3FCDB               ; FD04  $D0 $D5
-L3FD06:
+    BNE @Loop                ; FD04  $D0 $D5
+
+   @End:
     RTS                      ; FD06  $60
 
 ;; sub start ;;
@@ -7915,6 +7923,8 @@ L3FD41:
     ADC $08                  ; FD43  $65 $08
 L3FD45:
     RTS                      ; FD45  $60
+
+;; Battle text thing. Waits for Sprite 0 hit?
 
 L3FD46:
     BIT PpuStatus_2002       ; FD46  $2C $02 $20

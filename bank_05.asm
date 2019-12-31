@@ -6,6 +6,7 @@
 .import L3FD46
 .import L3FA2A
 .import L3FD5B
+.import DoDivision
 
 .segment "BANK_05"
 
@@ -2120,689 +2121,690 @@
 ;
 
 L15F00:
-    JMP L15F09               ; 9F00  $4C $09 $9F
+    JMP L15F09
 L15F03:
-    JMP L16A57               ; 9F03  $4C $57 $AA
+    JMP L16A57
 L15F06:
-    JMP L16B4F               ; 9F06  $4C $4F $AB
+    JMP L16B4F
+
 L15F09:
-    JSR L3FD5B               ; 9F09  $20 $5B $FD
-    LDA $7B48                ; 9F0C  $AD $48 $7B
-    CMP #$7E                 ; 9F0F  $C9 $7E
-    BNE L15F16               ; 9F11  $D0 $03
-    JMP L1601B               ; 9F13  $4C $1B $A0
+    JSR L3FD5B               ; this does something with the PPU
+    LDA battle_result        ;
+    CMP #$7E                 ; check what I think might be the battle_result = it was A2
+    BNE L15F16               ; Since it only branches if it doesn't equal, then a result of 7E must do this next jump
+    JMP L1601B               ;
 L15F16:
-    JSR $A47C                ; 9F16  $20 $7C $A4
-    LDX #$08                 ; 9F19  $A2 $08
+    JSR $A47C
+    LDX #$08
 L15F1B:
-    LDA $7B62,X              ; 9F1B  $BD $62 $7B
-    BNE L15F28               ; 9F1E  $D0 $08
-    INX                      ; 9F20  $E8
-    CPX #$10                 ; 9F21  $E0 $10
-    BNE L15F1B               ; 9F23  $D0 $F6
-    JMP L1601B               ; 9F25  $4C $1B $A0
+    LDA $7B62,X
+    BNE L15F28
+    INX
+    CPX #$10
+    BNE L15F1B
+    JMP L1601B
 L15F28:
-    JSR L3FA2A               ; 9F28  $20 $2A $FA
-    LDA #$F0                 ; 9F2B  $A9 $F0
-    STA $0203                ; 9F2D  $8D $03 $02
-    LDA #$02                 ; 9F30  $A9 $02
-    STA SpriteDma_4014       ; 9F32  $8D $14 $40
-    LDA #$C0                 ; 9F35  $A9 $C0
-    STA $54                  ; 9F37  $85 $54
-    LDA #$27                 ; 9F39  $A9 $27
-    STA $55                  ; 9F3B  $85 $55
-    JSR $ABAF                ; 9F3D  $20 $AF $AB
-    LDX #$00                 ; 9F40  $A2 $00
-    LDA #$00                 ; 9F42  $A9 $00
+    JSR L3FA2A
+    LDA #$F0
+    STA $0203
+    LDA #$02
+    STA SpriteDma_4014
+    LDA #$C0
+    STA $54
+    LDA #$27
+    STA $55
+    JSR $ABAF
+    LDX #$00
+    LDA #$00
 B9F44:
-    STA PpuData_2007         ; 9F44  $8D $07 $20
-    INX                      ; 9F47  $E8
-    CPX #$40                 ; 9F48  $E0 $40
-    BNE B9F44                ; 9F4A  $D0 $F8
-    JSR L1645E               ; 9F4C  $20 $5E $A4
-    LDA #$24                 ; 9F4F  $A9 $24
-    STA $55                  ; 9F51  $85 $55
-    STA $47                  ; 9F53  $85 $47
-    LDA #$00                 ; 9F55  $A9 $00
-    STA $54                  ; 9F57  $85 $54
-    LDA #$40                 ; 9F59  $A9 $40
-    STA $46                  ; 9F5B  $85 $46
-    JSR $A02A                ; 9F5D  $20 $2A $A0
-    LDA $3A                  ; 9F60  $A5 $3A
-    STA PpuControl_2000      ; 9F62  $8D $00 $20
-    LDA #$27                 ; 9F65  $A9 $27
-    STA $55                  ; 9F67  $85 $55
-    LDA #$80                 ; 9F69  $A9 $80
-    STA $54                  ; 9F6B  $85 $54
-    LDA #$24                 ; 9F6D  $A9 $24
-    STA $47                  ; 9F6F  $85 $47
-    LDA #$5F                 ; 9F71  $A9 $5F
-    STA $46                  ; 9F73  $85 $46
-    JSR $A02A                ; 9F75  $20 $2A $A0
-    JSR L1645E               ; 9F78  $20 $5E $A4
-    JSR $FAD0                ; 9F7B  $20 $D0 $FA
-    LDA #$00                 ; 9F7E  $A9 $00
-    STA $5C                  ; 9F80  $85 $5C
-    JSR $A0AA                ; 9F82  $20 $AA $A0
-    LDA #$76                 ; 9F85  $A9 $76
-    STA $A9                  ; 9F87  $85 $A9
-    LDA #$00                 ; 9F89  $A9 $00
-    STA $A8                  ; 9F8B  $85 $A8
-    JSR $A084                ; 9F8D  $20 $84 $A0
-    LDX #$00                 ; 9F90  $A2 $00
-    STX $6F                  ; 9F92  $86 $6F
-    STX $6E                  ; 9F94  $86 $6E
-    LDA #$09                 ; 9F96  $A9 $09
-    STA $45                  ; 9F98  $85 $45
-    LDA #$E9                 ; 9F9A  $A9 $E9
-    STA $64                  ; 9F9C  $85 $64
-    LDA #$0A                 ; 9F9E  $A9 $0A
-    STA $44                  ; 9FA0  $85 $44
-    JSR $A13D                ; 9FA2  $20 $3D $A1
-    LDA #$EA                 ; 9FA5  $A9 $EA
-    STA $64                  ; 9FA7  $85 $64
-    LDA #$1C                 ; 9FA9  $A9 $1C
-    STA $44                  ; 9FAB  $85 $44
-    JSR $A13D                ; 9FAD  $20 $3D $A1
-    LDX #$03                 ; 9FB0  $A2 $03
+    STA PpuData_2007
+    INX
+    CPX #$40
+    BNE B9F44
+    JSR L1645E
+    LDA #$24
+    STA $55
+    STA $47
+    LDA #$00
+    STA $54
+    LDA #$40
+    STA $46
+    JSR $A02A
+    LDA $3A
+    STA PpuControl_2000
+    LDA #$27
+    STA $55
+    LDA #$80
+    STA $54
+    LDA #$24
+    STA $47
+    LDA #$5F
+    STA $46
+    JSR $A02A
+    JSR L1645E
+    JSR $FAD0
+    LDA #$00
+    STA $5C
+    JSR $A0AA
+    LDA #$76
+    STA $A9
+    LDA #$00
+    STA $A8
+    JSR $A084
+    LDX #$00
+    STX $6F
+    STX $6E
+    LDA #$09
+    STA $45
+    LDA #$E9
+    STA $64
+    LDA #$0A
+    STA $44
+    JSR $A13D
+    LDA #$EA
+    STA $64
+    LDA #$1C
+    STA $44
+    JSR $A13D
+    LDX #$03
 B9FB2:
-    LDA $A470,X              ; 9FB2  $BD $70 $A4
-    STA $62,X                ; 9FB5  $95 $62
-    DEX                      ; 9FB7  $CA
-    BPL B9FB2                ; 9FB8  $10 $F8
-    JSR L3FD5B               ; 9FBA  $20 $5B $FD
-    JSR $FB1F                ; 9FBD  $20 $1F $FB
-    LDA #$00                 ; 9FC0  $A9 $00
-    STA $5C                  ; 9FC2  $85 $5C
-    JSR $A0FA                ; 9FC4  $20 $FA $A0
-    JSR L3FD46               ; 9FC7  $20 $46 $FD
-    JSR $FADC                ; 9FCA  $20 $DC $FA
-    LDA $3A                  ; 9FCD  $A5 $3A
-    ORA #$01                 ; 9FCF  $09 $01
-    AND #$EF                 ; 9FD1  $29 $EF
-    STA $3A                  ; 9FD3  $85 $3A
-    STA $3B                  ; 9FD5  $85 $3B
-    STA PpuControl_2000      ; 9FD7  $8D $00 $20
-    LDA #$00                 ; 9FDA  $A9 $00
-    STA PpuScroll_2005       ; 9FDC  $8D $05 $20
-    STA PpuScroll_2005       ; 9FDF  $8D $05 $20
-    LDA #$00                 ; 9FE2  $A9 $00
-    STA $00                  ; 9FE4  $85 $00
-    JSR L3FD5B               ; 9FE6  $20 $5B $FD
+    LDA $A470,X
+    STA $62,X
+    DEX
+    BPL B9FB2
+    JSR L3FD5B
+    JSR $FB1F
+    LDA #$00
+    STA $5C
+    JSR $A0FA
+    JSR L3FD46
+    JSR $FADC
+    LDA $3A
+    ORA #$01
+    AND #$EF
+    STA $3A
+    STA $3B
+    STA PpuControl_2000
+    LDA #$00
+    STA PpuScroll_2005
+    STA PpuScroll_2005
+    LDA #$00
+    STA $00
+    JSR L3FD5B
 B9FE9:
-    JSR $A46A                ; 9FE9  $20 $6A $A4
-    LDX $00                  ; 9FEC  $A6 $00
-    LDA $A026,X              ; 9FEE  $BD $26 $A0
-    STA $79A8,X              ; 9FF1  $9D $A8 $79
-    STA $79C4,X              ; 9FF4  $9D $C4 $79
-    JSR $A05E                ; 9FF7  $20 $5E $A0
-    LDA #$00                 ; 9FFA  $A9 $00
-    STA $01                  ; 9FFC  $85 $01
+    JSR $A46A
+    LDX $00
+    LDA $A026,X
+    STA $79A8,X
+    STA $79C4,X
+    JSR $A05E
+    LDA #$00
+    STA $01
 B9FFE:
-    JSR L1645E               ; 9FFE  $20 $5E $A4
-    INC $01                  ; A001  $E6 $01
-    LDA $01                  ; A003  $A5 $01
-    CMP #$03                 ; A005  $C9 $03
-    BNE B9FFE                ; A007  $D0 $F5
-    INC $00                  ; A009  $E6 $00
-    LDA $00                  ; A00B  $A5 $00
-    CMP #$04                 ; A00D  $C9 $04
-    BNE B9FE9                ; A00F  $D0 $D8
-    LDA #$00                 ; A011  $A9 $00
-    STA $73                  ; A013  $85 $73
-    JSR $A193                ; A015  $20 $93 $A1
-    JSR L3FD5B               ; A018  $20 $5B $FD
+    JSR L1645E
+    INC $01
+    LDA $01
+    CMP #$03
+    BNE B9FFE
+    INC $00
+    LDA $00
+    CMP #$04
+    BNE B9FE9
+    LDA #$00
+    STA $73
+    JSR $A193
+    JSR L3FD5B
 L1601B:
-    JSR L3FD46               ; A01B  $20 $46 $FD
-    JSR $FADC                ; A01E  $20 $DC $FA
-    PLA                      ; A021  $68
-    PLA                      ; A022  $68
-    JMP L3FA0F               ; A023  $4C $0F $FA
+    JSR L3FD46
+    JSR $FADC
+    PLA
+    PLA
+    JMP L3FA0F
 
 .byte $0F,$00,$02,$30,$20,$6A,$A4,$20,$AF,$AB,$A9
 
-    JMP ($00A2)              ; A031  $6C $A2 $00
+    JMP ($00A2)
 A034:
-    STA PpuData_2007         ; A034  $8D $07 $20
-    INX                      ; A037  $E8
-    CPX #$40                 ; A038  $E0 $40
-    BNE A034                 ; A03A  $D0 $F8
-    JSR $A46A                ; A03C  $20 $6A $A4
-    LDA $3A                  ; A03F  $A5 $3A
-    ORA #$04                 ; A041  $09 $04
-    STA PpuControl_2000      ; A043  $8D $00 $20
-    LDA $47                  ; A046  $A5 $47
-    STA $55                  ; A048  $85 $55
-    LDA $46                  ; A04A  $A5 $46
-    STA $54                  ; A04C  $85 $54
-    JSR $ABAF                ; A04E  $20 $AF $AB
-    LDX #$00                 ; A051  $A2 $00
-    LDA #$6C                 ; A053  $A9 $6C
+    STA PpuData_2007
+    INX
+    CPX #$40
+    BNE A034
+    JSR $A46A
+    LDA $3A
+    ORA #$04
+    STA PpuControl_2000
+    LDA $47
+    STA $55
+    LDA $46
+    STA $54
+    JSR $ABAF
+    LDX #$00
+    LDA #$6C
 A055:
-    STA PpuData_2007         ; A055  $8D $07 $20
-    INX                      ; A058  $E8
-    CPX #$1A                 ; A059  $E0 $1A
-    BNE A055                 ; A05B  $D0 $F8
-    RTS                      ; A05D  $60
+    STA PpuData_2007
+    INX
+    CPX #$1A
+    BNE A055
+    RTS
 ;;----------------;;
-    LDA PpuStatus_2002       ; A05E  $AD $02 $20
-    JSR $A079                ; A061  $20 $79 $A0
+    LDA PpuStatus_2002
+    JSR $A079
 A064:
-    LDA $79A8,X              ; A064  $BD $A8 $79
-    STA PpuData_2007         ; A067  $8D $07 $20
-    INX                      ; A06A  $E8
-    CPX #$20                 ; A06B  $E0 $20
-    BNE A064                 ; A06D  $D0 $F5
-    JSR $A079                ; A06F  $20 $79 $A0
-    STX PpuAddr_2006         ; A072  $8E $06 $20
-    STX PpuAddr_2006         ; A075  $8E $06 $20
-    RTS                      ; A078  $60
+    LDA $79A8,X
+    STA PpuData_2007
+    INX
+    CPX #$20
+    BNE A064
+    JSR $A079
+    STX PpuAddr_2006
+    STX PpuAddr_2006
+    RTS
 ;;----------------;;
-    LDA #$3F                 ; A079  $A9 $3F
-    STA PpuAddr_2006         ; A07B  $8D $06 $20
-    LDX #$00                 ; A07E  $A2 $00
-    STX PpuAddr_2006         ; A080  $8E $06 $20
-    RTS                      ; A083  $60
+    LDA #$3F
+    STA PpuAddr_2006
+    LDX #$00
+    STX PpuAddr_2006
+    RTS
 
 ;; sub start ;;
-    LDA $A9                  ; A084  $A5 $A9
-    STA $45                  ; A086  $85 $45
-    LDA $A8                  ; A088  $A5 $A8
-    STA $44                  ; A08A  $85 $44
-    LDX #$11                 ; A08C  $A2 $11
+    LDA $A9
+    STA $45
+    LDA $A8
+    STA $44
+    LDX #$11
 L1608E:
-    LDA #$FF                 ; A08E  $A9 $FF
-    LDY #$00                 ; A090  $A0 $00
+    LDA #$FF
+    LDY #$00
 L16092:
-    STA ($44),Y              ; A092  $91 $44
-    INY                      ; A094  $C8
-    CPY #$24                 ; A095  $C0 $24
-    BNE L16092               ; A097  $D0 $F9
-    CLC                      ; A099  $18
-    LDA $44                  ; A09A  $A5 $44
-    ADC #$24                 ; A09C  $69 $24
-    STA $44                  ; A09E  $85 $44
-    LDA $45                  ; A0A0  $A5 $45
-    ADC #$00                 ; A0A2  $69 $00
-    STA $45                  ; A0A4  $85 $45
-    DEX                      ; A0A6  $CA
-    BNE L1608E               ; A0A7  $D0 $E5
-    RTS                      ; A0A9  $60
+    STA ($44),Y
+    INY
+    CPY #$24
+    BNE L16092
+    CLC
+    LDA $44
+    ADC #$24
+    STA $44
+    LDA $45
+    ADC #$00
+    STA $45
+    DEX
+    BNE L1608E
+    RTS
 ;;----------------;;
-    JSR L3FD46               ; A0AA  $20 $46 $FD
-    LDA #$78                 ; A0AD  $A9 $78
-    STA $A9                  ; A0AF  $85 $A9
-    LDA #$58                 ; A0B1  $A9 $58
-    STA $A8                  ; A0B3  $85 $A8
-    JSR $A084                ; A0B5  $20 $84 $A0
-    LDX #$00                 ; A0B8  $A2 $00
-    STX $6F                  ; A0BA  $86 $6F
-    STX $6E                  ; A0BC  $86 $6E
-    LDA #$09                 ; A0BE  $A9 $09
-    STA $45                  ; A0C0  $85 $45
-    LDA #$E8                 ; A0C2  $A9 $E8
-    STA $64                  ; A0C4  $85 $64
-    LDA #$09                 ; A0C6  $A9 $09
-    STA $44                  ; A0C8  $85 $44
-    JSR $A13D                ; A0CA  $20 $3D $A1
-    LDA #$1B                 ; A0CD  $A9 $1B
-    STA $44                  ; A0CF  $85 $44
+    JSR L3FD46
+    LDA #$78
+    STA $A9
+    LDA #$58
+    STA $A8
+    JSR $A084
+    LDX #$00
+    STX $6F
+    STX $6E
+    LDA #$09
+    STA $45
+    LDA #$E8
+    STA $64
+    LDA #$09
+    STA $44
+    JSR $A13D
+    LDA #$1B
+    STA $44
 A0D1:
-    LDX $6E                  ; A0D1  $A6 $6E
-    LDA $7B6A,X              ; A0D3  $BD $6A $7B
-    STA $64                  ; A0D6  $85 $64
-    JSR $A13D                ; A0D8  $20 $3D $A1
-    CLC                      ; A0DB  $18
-    LDA $44                  ; A0DC  $A5 $44
-    ADC #$12                 ; A0DE  $69 $12
-    STA $44                  ; A0E0  $85 $44
-    INC $6E                  ; A0E2  $E6 $6E
-    LDA $6E                  ; A0E4  $A5 $6E
-    CMP #$08                 ; A0E6  $C9 $08
-    BNE A0D1                 ; A0E8  $D0 $E7
-    LDX #$03                 ; A0EA  $A2 $03
+    LDX $6E
+    LDA $7B6A,X
+    STA $64
+    JSR $A13D
+    CLC
+    LDA $44
+    ADC #$12
+    STA $44
+    INC $6E
+    LDA $6E
+    CMP #$08
+    BNE A0D1
+    LDX #$03
 A0EC:
-    LDA $A478,X              ; A0EC  $BD $78 $A4
-    STA $62,X                ; A0EF  $95 $62
-    DEX                      ; A0F1  $CA
-    BPL A0EC                 ; A0F2  $10 $F8
-    JSR L3FD5B               ; A0F4  $20 $5B $FD
-    JMP $FB1F                ; A0F7  $4C $1F $FB
-    JSR L3FD46               ; A0FA  $20 $46 $FD
-    LDA #$76                 ; A0FD  $A9 $76
-    STA $A9                  ; A0FF  $85 $A9
-    LDA #$00                 ; A101  $A9 $00
-    STA $A8                  ; A103  $85 $A8
-    JSR $A084                ; A105  $20 $84 $A0
-    LDX #$00                 ; A108  $A2 $00
-    STX $6E                  ; A10A  $86 $6E
-    STX $6F                  ; A10C  $86 $6F
-    LDA #$13                 ; A10E  $A9 $13
-    STA $45                  ; A110  $85 $45
-    STA $44                  ; A112  $85 $44
-    LDX #$08                 ; A114  $A2 $08
-    STX $70                  ; A116  $86 $70
+    LDA $A478,X
+    STA $62,X
+    DEX
+    BPL A0EC
+    JSR L3FD5B
+    JMP $FB1F
+    JSR L3FD46
+    LDA #$76
+    STA $A9
+    LDA #$00
+    STA $A8
+    JSR $A084
+    LDX #$00
+    STX $6E
+    STX $6F
+    LDA #$13
+    STA $45
+    STA $44
+    LDX #$08
+    STX $70
 A118:
-    JSR $A151                ; A118  $20 $51 $A1
-    JSR $A464                ; A11B  $20 $64 $A4
-    CLC                      ; A11E  $18
-    LDA $70                  ; A11F  $A5 $70
-    ADC #$08                 ; A121  $69 $08
-    STA $70                  ; A123  $85 $70
-    CMP #$21                 ; A125  $C9 $21
-    BCC A118                 ; A127  $90 $EF
-    LDX $5C                  ; A129  $A6 $5C
-    STX $A7                  ; A12B  $86 $A7
-    LDX #$03                 ; A12D  $A2 $03
+    JSR $A151
+    JSR $A464
+    CLC
+    LDA $70
+    ADC #$08
+    STA $70
+    CMP #$21
+    BCC A118
+    LDX $5C
+    STX $A7
+    LDX #$03
 A12F:
-    LDA $A474,X              ; A12F  $BD $74 $A4
-    STA $62,X                ; A132  $95 $62
-    DEX                      ; A134  $CA
-    BPL A12F                 ; A135  $10 $F8
-    JSR L3FD5B               ; A137  $20 $5B $FD
-    JMP $FB1F                ; A13A  $4C $1F $FB
-    LDA #$82                 ; A13D  $A9 $82
-    STA $63                  ; A13F  $85 $63
-    LDA #$00                 ; A141  $A9 $00
-    STA $62                  ; A143  $85 $62
-    LDX #$00                 ; A145  $A2 $00
-    STX $AA                  ; A147  $86 $AA
-    LDX #$0A                 ; A149  $A2 $0A
-    JSR L3FD8C               ; A14B  $20 $8C $FD
-    JMP $FB1B                ; A14E  $4C $1B $FB
+    LDA $A474,X
+    STA $62,X
+    DEX
+    BPL A12F
+    JSR L3FD5B
+    JMP $FB1F
+    LDA #$82
+    STA $63
+    LDA #$00
+    STA $62
+    LDX #$00
+    STX $AA
+    LDX #$0A
+    JSR L3FD8C
+    JMP $FB1B
 A151:
-    LDX $6E                  ; A151  $A6 $6E
-    LDA $6060,X              ; A153  $BD $60 $60
-    STA $64                  ; A156  $85 $64
-    JSR $A13D                ; A158  $20 $3D $A1
-    CLC                      ; A15B  $18
-    LDA $44                  ; A15C  $A5 $44
-    ADC #$0A                 ; A15E  $69 $0A
-    STA $44                  ; A160  $85 $44
-    LDA $6F                  ; A162  $A5 $6F
-    ADC #$00                 ; A164  $69 $00
-    STA $6F                  ; A166  $85 $6F
-    INC $6E                  ; A168  $E6 $6E
-    LDX $6E                  ; A16A  $A6 $6E
-    LDA $6060,X              ; A16C  $BD $60 $60
-    STA $64                  ; A16F  $85 $64
-    JSR $A13D                ; A171  $20 $3D $A1
-    CLC                      ; A174  $18
-    LDA $44                  ; A175  $A5 $44
-    ADC #$1C                 ; A177  $69 $1C
-    STA $44                  ; A179  $85 $44
-    LDA $6F                  ; A17B  $A5 $6F
-    ADC #$00                 ; A17D  $69 $00
-    STA $6F                  ; A17F  $85 $6F
-    INC $6E                  ; A181  $E6 $6E
-    LDA $6E                  ; A183  $A5 $6E
-    CMP $70                  ; A185  $C5 $70
-    BCC A151                 ; A187  $90 $C8
-    RTS                      ; A189  $60
+    LDX $6E
+    LDA $6060,X
+    STA $64
+    JSR $A13D
+    CLC
+    LDA $44
+    ADC #$0A
+    STA $44
+    LDA $6F
+    ADC #$00
+    STA $6F
+    INC $6E
+    LDX $6E
+    LDA $6060,X
+    STA $64
+    JSR $A13D
+    CLC
+    LDA $44
+    ADC #$1C
+    STA $44
+    LDA $6F
+    ADC #$00
+    STA $6F
+    INC $6E
+    LDA $6E
+    CMP $70
+    BCC A151
+    RTS
 ;;----------------;;
-    JSR $ABD2                ; A18A  $20 $D2 $AB
-    LDA #$02                 ; A18D  $A9 $02
-    STA SpriteDma_4014       ; A18F  $8D $14 $40
-    RTS                      ; A192  $60
+    JSR $ABD2
+    LDA #$02
+    STA SpriteDma_4014
+    RTS
 ;;----------------;;
-    LDA #$00                 ; A193  $A9 $00
-    STA $72                  ; A195  $85 $72
-    STA $74                  ; A197  $85 $74
-    STA $75                  ; A199  $85 $75
-    STA $50                  ; A19B  $85 $50
-    STA $51                  ; A19D  $85 $51
-    LDA #$F0                 ; A19F  $A9 $F0
-    LDX #$00                 ; A1A1  $A2 $00
+    LDA #$00
+    STA $72
+    STA $74
+    STA $75
+    STA $50
+    STA $51
+    LDA #$F0
+    LDX #$00
 A1A3:
-    STA $0250,X              ; A1A3  $9D $50 $02
-    INX                      ; A1A6  $E8
-    INX                      ; A1A7  $E8
-    INX                      ; A1A8  $E8
-    STA $0253,X              ; A1A9  $9D $53 $02
-    INX                      ; A1AC  $E8
-    CPX #$10                 ; A1AD  $E0 $10
-    BNE A1A3                 ; A1AF  $D0 $F2
-    LDA #$02                 ; A1B1  $A9 $02
-    STA $65                  ; A1B3  $85 $65
-    LDA #$40                 ; A1B5  $A9 $40
-    STA $64                  ; A1B7  $85 $64
-    LDA #$A4                 ; A1B9  $A9 $A4
-    STA $49                  ; A1BB  $85 $49
-    LDA #$16                 ; A1BD  $A9 $16
-    STA $48                  ; A1BF  $85 $48
-    LDA $A416                ; A1C1  $AD $16 $A4
-    STA $0247                ; A1C4  $8D $47 $02
-    LDA $A417                ; A1C7  $AD $17 $A4
-    STA $0244                ; A1CA  $8D $44 $02
-    JSR $FB2F                ; A1CD  $20 $2F $FB
+    STA $0250,X
+    INX
+    INX
+    INX
+    STA $0253,X
+    INX
+    CPX #$10
+    BNE A1A3
+    LDA #$02
+    STA $65
+    LDA #$40
+    STA $64
+    LDA #$A4
+    STA $49
+    LDA #$16
+    STA $48
+    LDA $A416
+    STA $0247
+    LDA $A417
+    STA $0244
+    JSR $FB2F
 A1D0:
-    JSR $A18A                ; A1D0  $20 $8A $A1
-    JSR L3FD46               ; A1D3  $20 $46 $FD
-    JSR $FC34                ; A1D6  $20 $34 $FC
-;    LDA $0034                ; A1D9  $AD $34 $00
+    JSR $A18A
+    JSR L3FD46
+    JSR $FC34
+;    LDA $0034
 .byte $AD,$34,$00
 
-    BEQ A1D0                 ; A1DC  $F0 $F2
-    CMP #$80                 ; A1DE  $C9 $80
-    BNE A20B                 ; A1E0  $D0 $29
-    LDA $50                  ; A1E2  $A5 $50
-    BEQ A1EE                 ; A1E4  $F0 $08
-    LDA $72                  ; A1E6  $A5 $72
-    BEQ A208                 ; A1E8  $F0 $1E
-    CMP #$02                 ; A1EA  $C9 $02
-    BEQ A208                 ; A1EC  $F0 $1A
+    BEQ A1D0
+    CMP #$80
+    BNE A20B
+    LDA $50
+    BEQ A1EE
+    LDA $72
+    BEQ A208
+    CMP #$02
+    BEQ A208
 A1EE:
-    INC $72                  ; A1EE  $E6 $72
-    LDA $72                  ; A1F0  $A5 $72
-    CMP #$03                 ; A1F2  $C9 $03
-    BCC A1FA                 ; A1F4  $90 $04
-    LDA #$00                 ; A1F6  $A9 $00
-    STA $72                  ; A1F8  $85 $72
+    INC $72
+    LDA $72
+    CMP #$03
+    BCC A1FA
+    LDA #$00
+    STA $72
 A1FA:
-    LDA $72                  ; A1FA  $A5 $72
-    BNE A208                 ; A1FC  $D0 $0A
-    LDA $74                  ; A1FE  $A5 $74
-    CMP #$0A                 ; A200  $C9 $0A
-    BCC A208                 ; A202  $90 $04
-    LDA #$09                 ; A204  $A9 $09
-    STA $74                  ; A206  $85 $74
+    LDA $72
+    BNE A208
+    LDA $74
+    CMP #$0A
+    BCC A208
+    LDA #$09
+    STA $74
 A208:
-    JMP $A3A6                ; A208  $4C $A6 $A3
+    JMP $A3A6
 A20B:
-    CMP #$40                 ; A20B  $C9 $40
-    BNE A234                 ; A20D  $D0 $25
-    LDA $50                  ; A20F  $A5 $50
-    BEQ A21B                 ; A211  $F0 $08
-    LDA $72                  ; A213  $A5 $72
-    BEQ A231                 ; A215  $F0 $1A
-    CMP #$01                 ; A217  $C9 $01
-    BEQ A231                 ; A219  $F0 $16
+    CMP #$40
+    BNE A234
+    LDA $50
+    BEQ A21B
+    LDA $72
+    BEQ A231
+    CMP #$01
+    BEQ A231
 A21B:
-    DEC $72                  ; A21B  $C6 $72
-    BPL A223                 ; A21D  $10 $04
-    LDA #$02                 ; A21F  $A9 $02
-    STA $72                  ; A221  $85 $72
+    DEC $72
+    BPL A223
+    LDA #$02
+    STA $72
 A223:
-    LDA $72                  ; A223  $A5 $72
-    BNE A231                 ; A225  $D0 $0A
-    LDA $74                  ; A227  $A5 $74
-    CMP #$0A                 ; A229  $C9 $0A
-    BCC A231                 ; A22B  $90 $04
-    LDA #$09                 ; A22D  $A9 $09
-    STA $74                  ; A22F  $85 $74
+    LDA $72
+    BNE A231
+    LDA $74
+    CMP #$0A
+    BCC A231
+    LDA #$09
+    STA $74
 A231:
-    JMP $A3A6                ; A231  $4C $A6 $A3
+    JMP $A3A6
 A234:
-    CMP #$20                 ; A234  $C9 $20
-    BNE A268                 ; A236  $D0 $30
-    INC $74                  ; A238  $E6 $74
-    LDA $72                  ; A23A  $A5 $72
-    BNE A24A                 ; A23C  $D0 $0C
-    LDA $74                  ; A23E  $A5 $74
-    CMP #$0A                 ; A240  $C9 $0A
-    BCC A265                 ; A242  $90 $21
-    LDA #$09                 ; A244  $A9 $09
-    STA $74                  ; A246  $85 $74
-    BNE A265                 ; A248  $D0 $1B
+    CMP #$20
+    BNE A268
+    INC $74
+    LDA $72
+    BNE A24A
+    LDA $74
+    CMP #$0A
+    BCC A265
+    LDA #$09
+    STA $74
+    BNE A265
 A24A:
-    LDA $74                  ; A24A  $A5 $74
-    CMP #$0C                 ; A24C  $C9 $0C
-    BCC A265                 ; A24E  $90 $15
-    INC $73                  ; A250  $E6 $73
-    LDA $73                  ; A252  $A5 $73
-    CMP #$05                 ; A254  $C9 $05
-    BCC A25C                 ; A256  $90 $04
-    LDA #$04                 ; A258  $A9 $04
-    STA $73                  ; A25A  $85 $73
+    LDA $74
+    CMP #$0C
+    BCC A265
+    INC $73
+    LDA $73
+    CMP #$05
+    BCC A25C
+    LDA #$04
+    STA $73
 A25C:
-    LDA #$01                 ; A25C  $A9 $01
-    JSR $A3E9                ; A25E  $20 $E9 $A3
-    LDA #$0B                 ; A261  $A9 $0B
-    STA $74                  ; A263  $85 $74
+    LDA #$01
+    JSR $A3E9
+    LDA #$0B
+    STA $74
 A265:
-    JMP $A3A6                ; A265  $4C $A6 $A3
+    JMP $A3A6
 A268:
-    CMP #$10                 ; A268  $C9 $10
-    BNE A286                 ; A26A  $D0 $1A
-    DEC $74                  ; A26C  $C6 $74
-    BPL A283                 ; A26E  $10 $13
-    LDA $72                  ; A270  $A5 $72
-    BEQ A27F                 ; A272  $F0 $0B
-    LDA $73                  ; A274  $A5 $73
-    BEQ A27A                 ; A276  $F0 $02
-    DEC $73                  ; A278  $C6 $73
+    CMP #$10
+    BNE A286
+    DEC $74
+    BPL A283
+    LDA $72
+    BEQ A27F
+    LDA $73
+    BEQ A27A
+    DEC $73
 A27A:
-    LDA #$00                 ; A27A  $A9 $00
-    JSR $A3E9                ; A27C  $20 $E9 $A3
+    LDA #$00
+    JSR $A3E9
 A27F:
-    LDA #$00                 ; A27F  $A9 $00
-    STA $74                  ; A281  $85 $74
+    LDA #$00
+    STA $74
 A283:
-    JMP $A3A6                ; A283  $4C $A6 $A3
+    JMP $A3A6
 A286:
-    CMP #$01                 ; A286  $C9 $01
-    BEQ A28D                 ; A288  $F0 $03
-    JMP $A37B                ; A28A  $4C $7B $A3
+    CMP #$01
+    BEQ A28D
+    JMP $A37B
 A28D:
-    LDA $50                  ; A28D  $A5 $50
-    BNE A2D7                 ; A28F  $D0 $46
-    LDA $72                  ; A291  $A5 $72
-    BNE A2A5                 ; A293  $D0 $10
-    LDA $75                  ; A295  $A5 $75
-    CMP #$08                 ; A297  $C9 $08
-    BNE A2A0                 ; A299  $D0 $05
-    BNE A2A0                 ; A29B  $D0 $03
-    JMP $A378                ; A29D  $4C $78 $A3
+    LDA $50
+    BNE A2D7
+    LDA $72
+    BNE A2A5
+    LDA $75
+    CMP #$08
+    BNE A2A0
+    BNE A2A0
+    JMP $A378
 A2A0:
-    CMP #$09                 ; A2A0  $C9 $09
-    BNE A2A5                 ; A2A2  $D0 $01
-    RTS                      ; A2A4  $60
+    CMP #$09
+    BNE A2A5
+    RTS
 ;;----------------;;
 A2A5:
-    LDA $72                  ; A2A5  $A5 $72
-    STA $54                  ; A2A7  $85 $54
-    LDA $75                  ; A2A9  $A5 $75
-    STA $55                  ; A2AB  $85 $55
-    INC $50                  ; A2AD  $E6 $50
-    LDA $72                  ; A2AF  $A5 $72
-    BNE A2BB                 ; A2B1  $D0 $08
-    LDA $73                  ; A2B3  $A5 $73
-    STA $75                  ; A2B5  $85 $75
-    INC $72                  ; A2B7  $E6 $72
-    BNE A2C1                 ; A2B9  $D0 $06
+    LDA $72
+    STA $54
+    LDA $75
+    STA $55
+    INC $50
+    LDA $72
+    BNE A2BB
+    LDA $73
+    STA $75
+    INC $72
+    BNE A2C1
 A2BB:
-    LDA #$00                 ; A2BB  $A9 $00
-    STA $72                  ; A2BD  $85 $72
-    STA $74                  ; A2BF  $85 $74
+    LDA #$00
+    STA $72
+    STA $74
 A2C1:
-    LDA #$00                 ; A2C1  $A9 $00
-    STA $74                  ; A2C3  $85 $74
-    LDX #$00                 ; A2C5  $A2 $00
+    LDA #$00
+    STA $74
+    LDX #$00
 A2C7:
-    LDA $0240,X              ; A2C7  $BD $40 $02
-    STA $0250,X              ; A2CA  $9D $50 $02
-    INX                      ; A2CD  $E8
-    CPX #$10                 ; A2CE  $E0 $10
-    BNE A2C7                 ; A2D0  $D0 $F5
-    BNE A2D7                 ; A2D2  $D0 $03
-    JMP $A378                ; A2D4  $4C $78 $A3
+    LDA $0240,X
+    STA $0250,X
+    INX
+    CPX #$10
+    BNE A2C7
+    BNE A2D7
+    JMP $A378
 A2D7:
-    LDA $72                  ; A2D7  $A5 $72
-    BNE A305                 ; A2D9  $D0 $2A
-    LDA $75                  ; A2DB  $A5 $75
-    CMP #$08                 ; A2DD  $C9 $08
-    BNE A305                 ; A2DF  $D0 $24
-    DEC $54                  ; A2E1  $C6 $54
-    LDA $55                  ; A2E3  $A5 $55
-    ASL A                    ; A2E5  $0A
-    CLC                      ; A2E6  $18
-    ADC $54                  ; A2E7  $65 $54
-    TAX                      ; A2E9  $AA
-    LDA $6060,X              ; A2EA  $BD $60 $60
-    BEQ A2F6                 ; A2ED  $F0 $07
-    CMP #$0F                 ; A2EF  $C9 $0F
-    BCS A2F6                 ; A2F1  $B0 $03
-    JMP $A193                ; A2F3  $4C $93 $A1
+    LDA $72
+    BNE A305
+    LDA $75
+    CMP #$08
+    BNE A305
+    DEC $54
+    LDA $55
+    ASL A
+    CLC
+    ADC $54
+    TAX
+    LDA $6060,X
+    BEQ A2F6
+    CMP #$0F
+    BCS A2F6
+    JMP $A193
 A2F6:
-    LDA #$00                 ; A2F6  $A9 $00
-    STA $6060,X              ; A2F8  $9D $60 $60
-    LDA $A7                  ; A2FB  $A5 $A7
-    STA $5C                  ; A2FD  $85 $5C
-    JSR $A0FA                ; A2FF  $20 $FA $A0
-    JMP $A193                ; A302  $4C $93 $A1
+    LDA #$00
+    STA $6060,X
+    LDA $A7
+    STA $5C
+    JSR $A0FA
+    JMP $A193
 A305:
-    LDA $75                  ; A305  $A5 $75
-    CMP #$09                 ; A307  $C9 $09
-    BNE A312                 ; A309  $D0 $07
-    LDA $72                  ; A30B  $A5 $72
-    BNE A312                 ; A30D  $D0 $03
-    JMP $A193                ; A30F  $4C $93 $A1
+    LDA $75
+    CMP #$09
+    BNE A312
+    LDA $72
+    BNE A312
+    JMP $A193
 A312:
-    LDA $72                  ; A312  $A5 $72
-    BNE A33C                 ; A314  $D0 $26
-    DEC $54                  ; A316  $C6 $54
-    LDA $55                  ; A318  $A5 $55
-    ASL A                    ; A31A  $0A
-    CLC                      ; A31B  $18
-    ADC $54                  ; A31C  $65 $54
-    TAX                      ; A31E  $AA
-    LDA $6060,X              ; A31F  $BD $60 $60
-    BEQ A32B                 ; A322  $F0 $07
-    CMP #$0F                 ; A324  $C9 $0F
-    BCS A32B                 ; A326  $B0 $03
-    JMP $A193                ; A328  $4C $93 $A1
+    LDA $72
+    BNE A33C
+    DEC $54
+    LDA $55
+    ASL A
+    CLC
+    ADC $54
+    TAX
+    LDA $6060,X
+    BEQ A32B
+    CMP #$0F
+    BCS A32B
+    JMP $A193
 A32B:
-    PHA                      ; A32B  $48
-    LDA $74                  ; A32C  $A5 $74
-    TAY                      ; A32E  $A8
-    LDA $7B6A,Y              ; A32F  $B9 $6A $7B
-    STA $6060,X              ; A332  $9D $60 $60
-    PLA                      ; A335  $68
-    STA $7B6A,Y              ; A336  $99 $6A $7B
-    JMP $A35F                ; A339  $4C $5F $A3
+    PHA
+    LDA $74
+    TAY
+    LDA $7B6A,Y
+    STA $6060,X
+    PLA
+    STA $7B6A,Y
+    JMP $A35F
 A33C:
-    DEC $72                  ; A33C  $C6 $72
-    LDA $75                  ; A33E  $A5 $75
-    ASL A                    ; A340  $0A
-    CLC                      ; A341  $18
-    ADC $72                  ; A342  $65 $72
-    TAX                      ; A344  $AA
-    LDA $6060,X              ; A345  $BD $60 $60
-    BEQ A351                 ; A348  $F0 $07
-    CMP #$0F                 ; A34A  $C9 $0F
-    BCS A351                 ; A34C  $B0 $03
-    JMP $A193                ; A34E  $4C $93 $A1
+    DEC $72
+    LDA $75
+    ASL A
+    CLC
+    ADC $72
+    TAX
+    LDA $6060,X
+    BEQ A351
+    CMP #$0F
+    BCS A351
+    JMP $A193
 A351:
-    PHA                      ; A351  $48
-    LDA $55                  ; A352  $A5 $55
-    TAY                      ; A354  $A8
-    LDA $7B6A,Y              ; A355  $B9 $6A $7B
-    STA $6060,X              ; A358  $9D $60 $60
-    PLA                      ; A35B  $68
-    STA $7B6A,Y              ; A35C  $99 $6A $7B
-    LDA $A7                  ; A35F  $A5 $A7
-    PHA                      ; A361  $48
-    LDA #$00                 ; A362  $A9 $00
-    STA $A7                  ; A364  $85 $A7
-    LDA #$00                 ; A366  $A9 $00
-    STA $5C                  ; A368  $85 $5C
-    JSR $A0AA                ; A36A  $20 $AA $A0
-    PLA                      ; A36D  $68
-    STA $A7                  ; A36E  $85 $A7
-    STA $5C                  ; A370  $85 $5C
-    JSR $A0FA                ; A372  $20 $FA $A0
-    JMP $A193                ; A375  $4C $93 $A1
-    JMP $A3A6                ; A378  $4C $A6 $A3
-    CMP #$02                 ; A37B  $C9 $02
-    BNE A3A3                 ; A37D  $D0 $24
-    LDA $50                  ; A37F  $A5 $50
-    BNE A38E                 ; A381  $D0 $0B
-    LDA #$00                 ; A383  $A9 $00
-    STA $72                  ; A385  $85 $72
-    LDA #$09                 ; A387  $A9 $09
-    STA $74                  ; A389  $85 $74
-    JMP $A3A6                ; A38B  $4C $A6 $A3
+    PHA
+    LDA $55
+    TAY
+    LDA $7B6A,Y
+    STA $6060,X
+    PLA
+    STA $7B6A,Y
+    LDA $A7
+    PHA
+    LDA #$00
+    STA $A7
+    LDA #$00
+    STA $5C
+    JSR $A0AA
+    PLA
+    STA $A7
+    STA $5C
+    JSR $A0FA
+    JMP $A193
+    JMP $A3A6
+    CMP #$02
+    BNE A3A3
+    LDA $50
+    BNE A38E
+    LDA #$00
+    STA $72
+    LDA #$09
+    STA $74
+    JMP $A3A6
 A38E:
-    LDA #$F0                 ; A38E  $A9 $F0
-    LDX #$00                 ; A390  $A2 $00
+    LDA #$F0
+    LDX #$00
 A392:
-    STA $0250,X              ; A392  $9D $50 $02
-    INX                      ; A395  $E8
-    INX                      ; A396  $E8
-    INX                      ; A397  $E8
-    STA $0253,X              ; A398  $9D $53 $02
-    INX                      ; A39B  $E8
-    CPX #$10                 ; A39C  $E0 $10
-    BNE A392                 ; A39E  $D0 $F2
-    JMP $A193                ; A3A0  $4C $93 $A1
+    STA $0250,X
+    INX
+    INX
+    INX
+    STA $0253,X
+    INX
+    CPX #$10
+    BNE A392
+    JMP $A193
 A3A3:
-    JMP $A1D0                ; A3A3  $4C $D0 $A1
-    LDX $72                  ; A3A6  $A6 $72
-    BEQ A3B4                 ; A3A8  $F0 $0A
-    CLC                      ; A3AA  $18
-    LDA $74                  ; A3AB  $A5 $74
-    ADC $73                  ; A3AD  $65 $73
-    STA $75                  ; A3AF  $85 $75
-    JMP $A3B8                ; A3B1  $4C $B8 $A3
+    JMP $A1D0
+    LDX $72
+    BEQ A3B4
+    CLC
+    LDA $74
+    ADC $73
+    STA $75
+    JMP $A3B8
 A3B4:
-    LDA $74                  ; A3B4  $A5 $74
-    STA $75                  ; A3B6  $85 $75
-    LDA $72                  ; A3B8  $A5 $72
-    ASL A                    ; A3BA  $0A
-    ASL A                    ; A3BB  $0A
-    ASL A                    ; A3BC  $0A
-    STA $58                  ; A3BD  $85 $58
-    ASL A                    ; A3BF  $0A
-    CLC                      ; A3C0  $18
-    ADC $58                  ; A3C1  $65 $58
-    STA $58                  ; A3C3  $85 $58
-    LDA $74                  ; A3C5  $A5 $74
-    ASL A                    ; A3C7  $0A
-    STA $59                  ; A3C8  $85 $59
-    CLC                      ; A3CA  $18
-    LDA $58                  ; A3CB  $A5 $58
-    ADC $59                  ; A3CD  $65 $59
-    TAY                      ; A3CF  $A8
-    LDA ($48),Y              ; A3D0  $B1 $48
-    STA $0247                ; A3D2  $8D $47 $02
-    INY                      ; A3D5  $C8
-    LDA ($48),Y              ; A3D6  $B1 $48
-    STA $0244                ; A3D8  $8D $44 $02
-    LDA #$40                 ; A3DB  $A9 $40
-    STA $64                  ; A3DD  $85 $64
-    LDA #$02                 ; A3DF  $A9 $02
-    STA $65                  ; A3E1  $85 $65
-    JSR $FB2F                ; A3E3  $20 $2F $FB
-    JMP $A1D0                ; A3E6  $4C $D0 $A1
-    BNE A3F9                 ; A3E9  $D0 $0E
-    SEC                      ; A3EB  $38
-    LDA $A7                  ; A3EC  $A5 $A7
-    SBC #$26                 ; A3EE  $E9 $26
-    BCS A3F4                 ; A3F0  $B0 $02
-    LDA #$00                 ; A3F2  $A9 $00
+    LDA $74
+    STA $75
+    LDA $72
+    ASL A
+    ASL A
+    ASL A
+    STA $58
+    ASL A
+    CLC
+    ADC $58
+    STA $58
+    LDA $74
+    ASL A
+    STA $59
+    CLC
+    LDA $58
+    ADC $59
+    TAY
+    LDA ($48),Y
+    STA $0247
+    INY
+    LDA ($48),Y
+    STA $0244
+    LDA #$40
+    STA $64
+    LDA #$02
+    STA $65
+    JSR $FB2F
+    JMP $A1D0
+    BNE A3F9
+    SEC
+    LDA $A7
+    SBC #$26
+    BCS A3F4
+    LDA #$00
 A3F4:
-    STA $A7                  ; A3F4  $85 $A7
-    JMP $A406                ; A3F6  $4C $06 $A4
+    STA $A7
+    JMP $A406
 A3F9:
-    CLC                      ; A3F9  $18
+    CLC
 A3FA:
-    LDA $A7                  ; A3FA  $A5 $A7
+    LDA $A7
 A3FC:
-    ADC #$26                 ; A3FC  $69 $26
+    ADC #$26
 A3FE:
-    CMP #$99                 ; A3FE  $C9 $99
-    BCC A404                 ; A400  $90 $02
-    LDA #$98                 ; A402  $A9 $98
+    CMP #$99
+    BCC A404
+    LDA #$98
 A404:
-    STA $A7                  ; A404  $85 $A7
-    LDX #$03                 ; A406  $A2 $03
+    STA $A7
+    LDX #$03
 A408:
-    LDA $A474,X              ; A408  $BD $74 $A4
-    STA $62,X                ; A40B  $95 $62
-    DEX                      ; A40D  $CA
-    BPL A408                 ; A40E  $10 $F8
-    JSR L3FD5B               ; A410  $20 $5B $FD
-    JMP $FB1F                ; A413  $4C $1F $FB
+    LDA $A474,X
+    STA $62,X
+    DEX
+    BPL A408
+    JSR L3FD5B
+    JMP $FB1F
 
 ;; JIGS - looks like sprite coordinates or something
 .byte $10, $30
@@ -2826,7 +2828,7 @@ A408:
 .byte $60, $70
 .byte $60, $80
 .byte $60, $90
-.byte $60, $A0 
+.byte $60, $A0
 .byte $60, $B0
 .byte $60, $C0
 .byte $60, $D0
@@ -2835,7 +2837,7 @@ A408:
 .byte $A8, $30
 .byte $A8, $40
 .byte $A8, $50
-.byte $A8, $60 
+.byte $A8, $60
 .byte $A8, $70
 .byte $A8, $80
 .byte $A8, $90
@@ -2845,1097 +2847,1107 @@ A408:
 .byte $A8, $D0
 
 L1645E:
-    JSR L3FD46               ; A45E  $20 $46 $FD
-    JMP L3FD5B               ; A461  $4C $5B $FD
+    JSR L3FD46
+    JMP L3FD5B
 
 ;; sub start ;;
-    JSR L3FD5B               ; A464  $20 $5B $FD
-    JMP L3FD46               ; A467  $4C $46 $FD
-    JSR L1645E               ; A46A  $20 $5E $A4
-    JMP L3FA2A               ; A46D  $4C $2A $FA
+    JSR L3FD5B
+    JMP L3FD46
+    JSR L1645E
+    JMP L3FA2A
 
 .byte $21,$16,$2B,$1D,$2B,$02,$3F,$1D,$21,$02,$2B,$17
 
 ;; sub start ;;
-    JSR L3FD46               ; A47C  $20 $46 $FD
+
+CheckSomeStatStuff:
+    JSR L3FD46                ; Waits for a sprite 0 hit to do battle message stuff.
 A47F:
-    LDX #$00                 ; A47F  $A2 $00
-    STX $9E                  ; A481  $86 $9E
-    STX $00                  ; A483  $86 $00
-    STX $01                  ; A485  $86 $01
-    STX $02                  ; A487  $86 $02
-    STX $03                  ; A489  $86 $03
-    LDX #$08                 ; A48B  $A2 $08
-L1648D:
-    LDA $7B62,X              ; A48D  $BD $62 $7B
-A490:
-    CMP #$FF                 ; A490  $C9 $FF
-    BEQ L164A7               ; A492  $F0 $13
-    AND #$7F                 ; A494  $29 $7F
-    TAY                      ; A496  $A8
-A497:
-    LDA $B700,Y              ; A497  $B9 $00 $B7
-    CLC                      ; A49A  $18
-A49B:
-    ADC $00                  ; A49B  $65 $00
-    STA $00                  ; A49D  $85 $00
-A49F:
-    LDA $01                  ; A49F  $A5 $01
-    ADC #$00                 ; A4A1  $69 $00
-A4A3:
-    STA $01                  ; A4A3  $85 $01
-    INC $02                  ; A4A5  $E6 $02
-L164A7:
-    INX                      ; A4A7  $E8
-    CPX #$10                 ; A4A8  $E0 $10
-    BNE L1648D               ; A4AA  $D0 $E1
-    JSR $FCC3                ; A4AC  $20 $C3 $FC
-    LDA $04                  ; A4AF  $A5 $04
-    STA $22                  ; A4B1  $85 $22
-    LDX #$08                 ; A4B3  $A2 $08
-    STX $0C                  ; A4B5  $86 $0C
+    LDX #$00                  ; Set X to 0 and clear these variables
+    STX entity_counter
+    STX tmp
+    STX tmp+1
+    STX tmp+2
+    STX tmp+3
+    LDX #$08                  ; check the byte AFTER 8 $FFs
+    
+@Loop:
+    LDA statup_confirmation,X ; not totally sure... its 3, 2, 2, 2, 2, 2, 2, 2 after just wailing on some hornets.
+    CMP #$FF                  ; if it equals, jump to incementing X...
+    BEQ :+                   
+    AND #$7F                  ; otherwise, cut off the high bit
+    TAY                       ; and transfer to Y
+    LDA $B700,Y               ; get the resulting byte from this LUT in ROM
+    CLC                      
+    ADC tmp                   ; add tmp and save
+    STA tmp                  
+    LDA tmp+1                 
+    ADC #$00                  ; add carry to tmp+1
+    STA tmp+1                
+    INC tmp+2                 ; tmp+2 must be a counter, add 1 here
+
+  : INX                       ; add 1 to X (started at 8)
+    CPX #$10                  ; so only do 8 iterations of this loop
+    BNE @Loop      
+    
+;; after all that, tmp and tmp+1 is a 16-bit digit, made up of numbers from $B700, added up
+;; this next routine divides tmp and tmp+1 by tmp+2 and tmp+3.
+    
+    JSR DoDivision            ; Scary division routine in Bank F
+    LDA tmp+4                 ; tmp+4 is the low byte result 
+    STA division_result       ; back it up here
+    LDX #$08
+    STX tmp+$C                ; set another counter... X is gonna get clobbered
+
+;; Go through the list again...
+    
 L164B7:
-    LDA $7B62,X              ; A4B7  $BD $62 $7B
-    JSR $A9D3                ; A4BA  $20 $D3 $A9
-    INC $0C                  ; A4BD  $E6 $0C
-    LDX $0C                  ; A4BF  $A6 $0C
-    CPX #$10                 ; A4C1  $E0 $10
-    BNE L164B7               ; A4C3  $D0 $F2
-    JSR $A464                ; A4C5  $20 $64 $A4
-    CLC                      ; A4C8  $18
-    LDA $7CC0                ; A4C9  $AD $C0 $7C
-    STA $62                  ; A4CC  $85 $62
-    ADC $601C                ; A4CE  $6D $1C $60
-    STA $601C                ; A4D1  $8D $1C $60
-    LDA $7CC1                ; A4D4  $AD $C1 $7C
-    STA $63                  ; A4D7  $85 $63
-    ADC $601D                ; A4D9  $6D $1D $60
-    STA $601D                ; A4DC  $8D $1D $60
-    LDA #$00                 ; A4DF  $A9 $00
-    ADC $601E                ; A4E1  $6D $1E $60
-    STA $601E                ; A4E4  $8D $1E $60
-    JSR $FB27                ; A4E7  $20 $27 $FB
-    LDX #$00                 ; A4EA  $A2 $00
-    LDA $64                  ; A4EC  $A5 $64
-    STA $7D47,X              ; A4EE  $9D $47 $7D
-    INX                      ; A4F1  $E8
-    LDA $65                  ; A4F2  $A5 $65
-    STA $7D47,X              ; A4F4  $9D $47 $7D
-    INX                      ; A4F7  $E8
-    LDA $66                  ; A4F8  $A5 $66
-    STA $7D47,X              ; A4FA  $9D $47 $7D
-    INX                      ; A4FD  $E8
-    LDA $67                  ; A4FE  $A5 $67
-    STA $7D47,X              ; A500  $9D $47 $7D
-    INX                      ; A503  $E8
-    LDA $68                  ; A504  $A5 $68
-    STA $7D47,X              ; A506  $9D $47 $7D
-    INX                      ; A509  $E8
-    STX $AA                  ; A50A  $86 $AA
-    LDA #$B2                 ; A50C  $A9 $B2
-    STA $63                  ; A50E  $85 $63
-    LDA #$95                 ; A510  $A9 $95
-    STA $62                  ; A512  $85 $62
-    LDX #$05                 ; A514  $A2 $05
-    LDA #$6B                 ; A516  $A9 $6B
-    STA $64                  ; A518  $85 $64
-    JSR L3FD8C               ; A51A  $20 $8C $FD
-    JSR $A084                ; A51D  $20 $84 $A0
-    LDA #$10                 ; A520  $A9 $10
-    STA $44                  ; A522  $85 $44
-    STA $45                  ; A524  $85 $45
-    LDA #$00                 ; A526  $A9 $00
-    STA $6F                  ; A528  $85 $6F
-    JSR $FB1B                ; A52A  $20 $1B $FB
-    JSR L3FD5B               ; A52D  $20 $5B $FD
-    JSR $AA41                ; A530  $20 $41 $AA
-    LDY $AB                  ; A533  $A4 $AB
-    JSR $A9C4                ; A535  $20 $C4 $A9
-    JSR $AA48                ; A538  $20 $48 $AA
+    LDA statup_confirmation,X
+    JSR TheNextThing
+    INC tmp+$C                 ; increase the counter
+    LDX tmp+$C                 ; and load back into X
+    CPX #$10
+    BNE L164B7
+    
+    JSR $A464
+    CLC
+    LDA $7CC0
+    STA $62
+    ADC $601C
+    STA $601C
+    LDA $7CC1
+    STA $63
+    ADC $601D
+    STA $601D
+    LDA #$00
+    ADC $601E
+    STA $601E
+    JSR $FB27
+    LDX #$00
+    LDA $64
+    STA $7D47,X
+    INX
+    LDA $65
+    STA $7D47,X
+    INX
+    LDA $66
+    STA $7D47,X
+    INX
+    LDA $67
+    STA $7D47,X
+    INX
+    LDA $68
+    STA $7D47,X
+    INX
+    STX $AA
+    LDA #$B2
+    STA $63
+    LDA #$95
+    STA $62
+    LDX #$05
+    LDA #$6B
+    STA $64
+    JSR L3FD8C
+    JSR $A084
+    LDA #$10
+    STA $44
+    STA $45
+    LDA #$00
+    STA $6F
+    JSR $FB1B
+    JSR L3FD5B
+    JSR $AA41
+    LDY $AB
+    JSR $A9C4
+    JSR $AA48
 L1653B:
-    JSR $A992                ; A53B  $20 $92 $A9
-    LDX #$00                 ; A53E  $A2 $00
-    STX $52                  ; A540  $86 $52
-    STX $53                  ; A542  $86 $53
-    STX $AD                  ; A544  $86 $AD
-    LDX $9E                  ; A546  $A6 $9E
-    STX $E1                  ; A548  $86 $E1
-    JSR $FB23                ; A54A  $20 $23 $FB
-    LDY #$08                 ; A54D  $A0 $08
-    LDA ($80),Y              ; A54F  $B1 $80
-    AND #$FE                 ; A551  $29 $FE
-    BEQ L1655C               ; A553  $F0 $07
-    LDX #$FF                 ; A555  $A2 $FF
-    STX $E1                  ; A557  $86 $E1
-    JMP L16706               ; A559  $4C $06 $A7
+    JSR $A992
+    LDX #$00
+    STX $52
+    STX $53
+    STX $AD
+    LDX $9E
+    STX $E1
+    JSR $FB23
+    LDY #$08
+    LDA ($80),Y
+    AND #$FE
+    BEQ L1655C
+    LDX #$FF
+    STX $E1
+    JMP L16706
 L1655C:
-    LDX $9E                  ; A55C  $A6 $9E
-    LDA $7CF3,X              ; A55E  $BD $F3 $7C
-    BEQ L1658E               ; A561  $F0 $2B
-    CLC                      ; A563  $18
-    ADC $AC35                ; A564  $6D $35 $AC
-    ADC $22                  ; A567  $65 $22
-    STA $52                  ; A569  $85 $52
-    LDY #$2F                 ; A56B  $A0 $2F
-    LDA ($80),Y              ; A56D  $B1 $80
-    STA $45                  ; A56F  $85 $45
-    DEY                      ; A571  $88
-    LDA ($80),Y              ; A572  $B1 $80
-    STA $44                  ; A574  $85 $44
-    ORA $45                  ; A576  $05 $45
-    BNE L16580               ; A578  $D0 $06
-    JSR $A95C                ; A57A  $20 $5C $A9
-    JMP L1658E               ; A57D  $4C $8E $A5
+    LDX $9E
+    LDA $7CF3,X
+    BEQ L1658E
+    CLC
+    ADC $AC35
+    ADC $22
+    STA $52
+    LDY #$2F
+    LDA ($80),Y
+    STA $45
+    DEY
+    LDA ($80),Y
+    STA $44
+    ORA $45
+    BNE L16580
+    JSR $A95C
+    JMP L1658E
 L16580:
-    LDA $44                  ; A580  $A5 $44
-    BEQ L16587               ; A582  $F0 $03
-    JSR $A95C                ; A584  $20 $5C $A9
+    LDA $44
+    BEQ L16587
+    JSR $A95C
 L16587:
-    LDA $45                  ; A587  $A5 $45
-    BEQ L1658E               ; A589  $F0 $03
-    JSR $A95C                ; A58B  $20 $5C $A9
+    LDA $45
+    BEQ L1658E
+    JSR $A95C
 L1658E:
-    LDA $9E                  ; A58E  $A5 $9E
-    ASL A                    ; A590  $0A
-    ASL A                    ; A591  $0A
-    ASL A                    ; A592  $0A
-    ASL A                    ; A593  $0A
-    STA $44                  ; A594  $85 $44
-    CLC                      ; A596  $18
-    LDA $22                  ; A597  $A5 $22
-    ADC $AC36                ; A599  $6D $36 $AC
-    STA $52                  ; A59C  $85 $52
-    LDX #$00                 ; A59E  $A2 $00
-    STX $00                  ; A5A0  $86 $00
+    LDA $9E
+    ASL A
+    ASL A
+    ASL A
+    ASL A
+    STA $44
+    CLC
+    LDA $22
+    ADC $AC36
+    STA $52
+    LDX #$00
+    STX $00
 L165A2:
-    LDX $44                  ; A5A2  $A6 $44
-    LDA $7CF7,X              ; A5A4  $BD $F7 $7C
-    BEQ L165F1               ; A5A7  $F0 $48
-    CLC                      ; A5A9  $18
-    ADC $52                  ; A5AA  $65 $52
-    STA $53                  ; A5AC  $85 $53
-    LDA $00                  ; A5AE  $A5 $00
-    ASL A                    ; A5B0  $0A
-    CLC                      ; A5B1  $18
-    ADC #$10                 ; A5B2  $69 $10
-    TAY                      ; A5B4  $A8
-    LDA ($7E),Y              ; A5B5  $B1 $7E
-    CLC                      ; A5B7  $18
-    ADC #$0A                 ; A5B8  $69 $0A
-    STA $54                  ; A5BA  $85 $54
-    SEC                      ; A5BC  $38
-    LDA $53                  ; A5BD  $A5 $53
-    SBC $54                  ; A5BF  $E5 $54
-    INY                      ; A5C1  $C8
-    BCC L165F1               ; A5C2  $90 $2D
-    CLC                      ; A5C4  $18
-    ADC ($7E),Y              ; A5C5  $71 $7E
-    CMP #$64                 ; A5C7  $C9 $64
-    BCC A5EF                 ; A5C9  $90 $24
-    DEY                      ; A5CB  $88
-    LDA ($7E),Y              ; A5CC  $B1 $7E
-    TAX                      ; A5CE  $AA
-    INX                      ; A5CF  $E8
-    JSR $A86D                ; A5D0  $20 $6D $A8
-    TXA                      ; A5D3  $8A
-    STA ($7E),Y              ; A5D4  $91 $7E
-    INY                      ; A5D6  $C8
-    TYA                      ; A5D7  $98
-    PHA                      ; A5D8  $48
-    LDX $AD                  ; A5D9  $A6 $AD
-    CLC                      ; A5DB  $18
-    LDA $00                  ; A5DC  $A5 $00
-    ADC #$30                 ; A5DE  $69 $30
-    TAY                      ; A5E0  $A8
-    LDA ($7A),Y              ; A5E1  $B1 $7A
-    SEC                      ; A5E3  $38
-    SBC #$C0                 ; A5E4  $E9 $C0
-    STA $7FBA,X              ; A5E6  $9D $BA $7F
-    INC $AD                  ; A5E9  $E6 $AD
-    PLA                      ; A5EB  $68
-    TAY                      ; A5EC  $A8
-    LDA #$00                 ; A5ED  $A9 $00
+    LDX $44
+    LDA $7CF7,X
+    BEQ L165F1
+    CLC
+    ADC $52
+    STA $53
+    LDA $00
+    ASL A
+    CLC
+    ADC #$10
+    TAY
+    LDA ($7E),Y
+    CLC
+    ADC #$0A
+    STA $54
+    SEC
+    LDA $53
+    SBC $54
+    INY
+    BCC L165F1
+    CLC
+    ADC ($7E),Y
+    CMP #$64
+    BCC A5EF
+    DEY
+    LDA ($7E),Y
+    TAX
+    INX
+    JSR $A86D
+    TXA
+    STA ($7E),Y
+    INY
+    TYA
+    PHA
+    LDX $AD
+    CLC
+    LDA $00
+    ADC #$30
+    TAY
+    LDA ($7A),Y
+    SEC
+    SBC #$C0
+    STA $7FBA,X
+    INC $AD
+    PLA
+    TAY
+    LDA #$00
 A5EF:
-    STA ($7E),Y              ; A5EF  $91 $7E
+    STA ($7E),Y
 L165F1:
-    INC $44                  ; A5F1  $E6 $44
-    INC $00                  ; A5F3  $E6 $00
-    LDA $00                  ; A5F5  $A5 $00
-    CMP #$10                 ; A5F7  $C9 $10
-    BNE L165A2               ; A5F9  $D0 $A7
-    LDA #$7D                 ; A5FB  $A9 $7D
-    STA $45                  ; A5FD  $85 $45
-    LDA #$37                 ; A5FF  $A9 $37
-    STA $44                  ; A601  $85 $44
-    LDA $AC37                ; A603  $AD $37 $AC
-    STA $46                  ; A606  $85 $46
-    LDY #$30                 ; A608  $A0 $30
-    STY $47                  ; A60A  $84 $47
-    JSR $A842                ; A60C  $20 $42 $A8
-    LDA #$7D                 ; A60F  $A9 $7D
-    STA $45                  ; A611  $85 $45
-    LDA #$3B                 ; A613  $A9 $3B
-    STA $44                  ; A615  $85 $44
-    LDA $AC38                ; A617  $AD $38 $AC
-    STA $46                  ; A61A  $85 $46
-    LDY #$32                 ; A61C  $A0 $32
-    STY $47                  ; A61E  $84 $47
-    JSR $A842                ; A620  $20 $42 $A8
-    LDA #$00                 ; A623  $A9 $00
-    STA $52                  ; A625  $85 $52
-    STA $53                  ; A627  $85 $53
-    LDY #$0A                 ; A629  $A0 $0A
-    STY $44                  ; A62B  $84 $44
-    LDA $AC39                ; A62D  $AD $39 $AC
-    STA $4A                  ; A630  $85 $4A
-    LDY #$22                 ; A632  $A0 $22
-    STY $48                  ; A634  $84 $48
-    LDA $9E                  ; A636  $A5 $9E
-    ASL A                    ; A638  $0A
-    TAX                      ; A639  $AA
-    LDA $7D6A,X              ; A63A  $BD $6A $7D
-    STA $02                  ; A63D  $85 $02
-    LDA $7D6B,X              ; A63F  $BD $6B $7D
-    STA $03                  ; A642  $85 $03
-    ORA $02                  ; A644  $05 $02
-    BEQ L1664F               ; A646  $F0 $07
-    JSR $A7E9                ; A648  $20 $E9 $A7
-    LDA $4C                  ; A64B  $A5 $4C
-    STA $52                  ; A64D  $85 $52
+    INC $44
+    INC $00
+    LDA $00
+    CMP #$10
+    BNE L165A2
+    LDA #$7D
+    STA $45
+    LDA #$37
+    STA $44
+    LDA $AC37
+    STA $46
+    LDY #$30
+    STY $47
+    JSR $A842
+    LDA #$7D
+    STA $45
+    LDA #$3B
+    STA $44
+    LDA $AC38
+    STA $46
+    LDY #$32
+    STY $47
+    JSR $A842
+    LDA #$00
+    STA $52
+    STA $53
+    LDY #$0A
+    STY $44
+    LDA $AC39
+    STA $4A
+    LDY #$22
+    STY $48
+    LDA $9E
+    ASL A
+    TAX
+    LDA $7D6A,X
+    STA $02
+    LDA $7D6B,X
+    STA $03
+    ORA $02
+    BEQ L1664F
+    JSR $A7E9
+    LDA $4C
+    STA $52
 L1664F:
-    LDY #$0E                 ; A64F  $A0 $0E
-    STY $44                  ; A651  $84 $44
-    LDA $AC3A                ; A653  $AD $3A $AC
-    STA $4A                  ; A656  $85 $4A
-    LDY #$25                 ; A658  $A0 $25
-    STY $48                  ; A65A  $84 $48
-    LDA $9E                  ; A65C  $A5 $9E
-    ASL A                    ; A65E  $0A
-    TAX                      ; A65F  $AA
-    LDA $7D72,X              ; A660  $BD $72 $7D
-    STA $02                  ; A663  $85 $02
-    LDA $7D73,X              ; A665  $BD $73 $7D
-    STA $03                  ; A668  $85 $03
-    ORA $02                  ; A66A  $05 $02
-    BEQ L16675               ; A66C  $F0 $07
-    JSR $A7E9                ; A66E  $20 $E9 $A7
-    LDA $4C                  ; A671  $A5 $4C
-    STA $53                  ; A673  $85 $53
+    LDY #$0E
+    STY $44
+    LDA $AC3A
+    STA $4A
+    LDY #$25
+    STY $48
+    LDA $9E
+    ASL A
+    TAX
+    LDA $7D72,X
+    STA $02
+    LDA $7D73,X
+    STA $03
+    ORA $02
+    BEQ L16675
+    JSR $A7E9
+    LDA $4C
+    STA $53
 L16675:
-    LDA $AC3B                ; A675  $AD $3B $AC
-    STA $46                  ; A678  $85 $46
-    LDA #$7C                 ; A67A  $A9 $7C
-    STA $45                  ; A67C  $85 $45
-    LDA #$F3                 ; A67E  $A9 $F3
-    STA $44                  ; A680  $85 $44
-    LDA $AC41                ; A682  $AD $41 $AC
-    STA $49                  ; A685  $85 $49
-    LDY #$10                 ; A687  $A0 $10
-    STY $47                  ; A689  $84 $47
-    LDY #$13                 ; A68B  $A0 $13
-    STY $4A                  ; A68D  $84 $4A
-    JSR $A874                ; A68F  $20 $74 $A8
-    LDA $AC3C                ; A692  $AD $3C $AC
-    STA $46                  ; A695  $85 $46
-    LDA #$7D                 ; A697  $A9 $7D
-    STA $45                  ; A699  $85 $45
-    LDA #$3F                 ; A69B  $A9 $3F
-    STA $44                  ; A69D  $85 $44
-    LDA $AC42                ; A69F  $AD $42 $AC
-    STA $49                  ; A6A2  $85 $49
-    LDY #$13                 ; A6A4  $A0 $13
-    STY $47                  ; A6A6  $84 $47
-    LDY #$12                 ; A6A8  $A0 $12
-    STY $4A                  ; A6AA  $84 $4A
-    JSR $A874                ; A6AC  $20 $74 $A8
-    LDA $AC3D                ; A6AF  $AD $3D $AC
-    STA $46                  ; A6B2  $85 $46
-    LDA #$7D                 ; A6B4  $A9 $7D
-    STA $45                  ; A6B6  $85 $45
-    LDA #$43                 ; A6B8  $A9 $43
-    STA $44                  ; A6BA  $85 $44
-    LDA $AC43                ; A6BC  $AD $43 $AC
-    STA $49                  ; A6BF  $85 $49
-    LDY #$14                 ; A6C1  $A0 $14
-    STY $47                  ; A6C3  $84 $47
-    LDY #$10                 ; A6C5  $A0 $10
-    STY $4A                  ; A6C7  $84 $4A
-    JSR $A874                ; A6C9  $20 $74 $A8
-    LDA $AC3E                ; A6CC  $AD $3E $AC
-    STA $44                  ; A6CF  $85 $44
-    LDY #$2B                 ; A6D1  $A0 $2B
-    LDA ($7A),Y              ; A6D3  $B1 $7A
-    LSR A                    ; A6D5  $4A
-    LSR A                    ; A6D6  $4A
-    BEQ L166E2               ; A6D7  $F0 $09
-    STA $45                  ; A6D9  $85 $45
-    LDY #$11                 ; A6DB  $A0 $11
-    STY $46                  ; A6DD  $84 $46
-    JSR $A904                ; A6DF  $20 $04 $A9
+    LDA $AC3B
+    STA $46
+    LDA #$7C
+    STA $45
+    LDA #$F3
+    STA $44
+    LDA $AC41
+    STA $49
+    LDY #$10
+    STY $47
+    LDY #$13
+    STY $4A
+    JSR $A874
+    LDA $AC3C
+    STA $46
+    LDA #$7D
+    STA $45
+    LDA #$3F
+    STA $44
+    LDA $AC42
+    STA $49
+    LDY #$13
+    STY $47
+    LDY #$12
+    STY $4A
+    JSR $A874
+    LDA $AC3D
+    STA $46
+    LDA #$7D
+    STA $45
+    LDA #$43
+    STA $44
+    LDA $AC43
+    STA $49
+    LDY #$14
+    STY $47
+    LDY #$10
+    STY $4A
+    JSR $A874
+    LDA $AC3E
+    STA $44
+    LDY #$2B
+    LDA ($7A),Y
+    LSR A
+    LSR A
+    BEQ L166E2
+    STA $45
+    LDY #$11
+    STY $46
+    JSR $A904
 L166E2:
-    LDA $AC3F                ; A6E2  $AD $3F $AC
-    STA $44                  ; A6E5  $85 $44
-    LDA $52                  ; A6E7  $A5 $52
-    STA $45                  ; A6E9  $85 $45
-    BEQ L166F4               ; A6EB  $F0 $07
-    LDY #$12                 ; A6ED  $A0 $12
-    STY $46                  ; A6EF  $84 $46
-    JSR $A904                ; A6F1  $20 $04 $A9
+    LDA $AC3F
+    STA $44
+    LDA $52
+    STA $45
+    BEQ L166F4
+    LDY #$12
+    STY $46
+    JSR $A904
 L166F4:
-    LDA $AC40                ; A6F4  $AD $40 $AC
-    STA $44                  ; A6F7  $85 $44
-    LDA $53                  ; A6F9  $A5 $53
-    BEQ L16706               ; A6FB  $F0 $09
-    STA $45                  ; A6FD  $85 $45
-    LDY #$15                 ; A6FF  $A0 $15
-    STY $46                  ; A701  $84 $46
-    JSR $A904                ; A703  $20 $04 $A9
+    LDA $AC40
+    STA $44
+    LDA $53
+    BEQ L16706
+    STA $45
+    LDY #$15
+    STY $46
+    JSR $A904
 L16706:
-    LDA #$01                 ; A706  $A9 $01
-    STA $AC                  ; A708  $85 $AC
+    LDA #$01
+    STA $AC
 L1670A:
-    LDA $AC                  ; A70A  $A5 $AC
-    BNE L1670A               ; A70C  $D0 $FC
-    JSR L3FA2A               ; A70E  $20 $2A $FA
-    JSR L3FD46               ; A711  $20 $46 $FD
-    LDA $E1                  ; A714  $A5 $E1
-    CMP #$FF                 ; A716  $C9 $FF
-    BNE L1671D               ; A718  $D0 $03
-    JMP L167DA               ; A71A  $4C $DA $A7
+    LDA $AC
+    BNE L1670A
+    JSR L3FA2A
+    JSR L3FD46
+    LDA $E1
+    CMP #$FF
+    BNE L1671D
+    JMP L167DA
 L1671D:
-    LDA $AD                  ; A71D  $A5 $AD
-    BNE L16724               ; A71F  $D0 $03
-    JMP L167DA               ; A721  $4C $DA $A7
+    LDA $AD
+    BNE L16724
+    JMP L167DA
 L16724:
-    JSR $A084                ; A724  $20 $84 $A0
-    LDY #$02                 ; A727  $A0 $02
-    LDX #$00                 ; A729  $A2 $00
+    JSR $A084
+    LDY #$02
+    LDX #$00
 L1672B:
-    LDA ($7A),Y              ; A72B  $B1 $7A
-    STA $7D47,X              ; A72D  $9D $47 $7D
-    INY                      ; A730  $C8
-    INX                      ; A731  $E8
-    CPX #$06                 ; A732  $E0 $06
-    BNE L1672B               ; A734  $D0 $F5
-    LDA #$00                 ; A736  $A9 $00
-    STA $7D47,X              ; A738  $9D $47 $7D
-    LDA #$08                 ; A73B  $A9 $08
-    STA $44                  ; A73D  $85 $44
-    STA $45                  ; A73F  $85 $45
-    LDA #$00                 ; A741  $A9 $00
-    STA $6F                  ; A743  $85 $6F
-    JSR $FB1B                ; A745  $20 $1B $FB
-    JSR L3FD5B               ; A748  $20 $5B $FD
-    LDA #$00                 ; A74B  $A9 $00
-    STA $64                  ; A74D  $85 $64
-    JSR L16A57               ; A74F  $20 $57 $AA
-    JSR L3FD46               ; A752  $20 $46 $FD
-    JSR $A084                ; A755  $20 $84 $A0
-    LDA #$B2                 ; A758  $A9 $B2
-    STA $63                  ; A75A  $85 $63
-    LDA #$95                 ; A75C  $A9 $95
-    STA $62                  ; A75E  $85 $62
-    DEC $AD                  ; A760  $C6 $AD
-    LDX $AD                  ; A762  $A6 $AD
-    LDA $7FBA,X              ; A764  $BD $BA $7F
-    CMP #$5B                 ; A767  $C9 $5B
-    BCS L16775               ; A769  $B0 $0A
-    PHA                      ; A76B  $48
-    LDA #$B0                 ; A76C  $A9 $B0
-    STA $63                  ; A76E  $85 $63
-    LDA #$BB                 ; A770  $A9 $BB
-    STA $62                  ; A772  $85 $62
-    PLA                      ; A774  $68
+    LDA ($7A),Y
+    STA $7D47,X
+    INY
+    INX
+    CPX #$06
+    BNE L1672B
+    LDA #$00
+    STA $7D47,X
+    LDA #$08
+    STA $44
+    STA $45
+    LDA #$00
+    STA $6F
+    JSR $FB1B
+    JSR L3FD5B
+    LDA #$00
+    STA $64
+    JSR L16A57
+    JSR L3FD46
+    JSR $A084
+    LDA #$B2
+    STA $63
+    LDA #$95
+    STA $62
+    DEC $AD
+    LDX $AD
+    LDA $7FBA,X
+    CMP #$5B
+    BCS L16775
+    PHA
+    LDA #$B0
+    STA $63
+    LDA #$BB
+    STA $62
+    PLA
 L16775:
-    PHA                      ; A775  $48
-    AND #$7F                 ; A776  $29 $7F
-    STA $64                  ; A778  $85 $64
-    LDX #$00                 ; A77A  $A2 $00
-    STX $AA                  ; A77C  $86 $AA
-    LDX #$05                 ; A77E  $A2 $05
-    JSR L3FD8C               ; A780  $20 $8C $FD
-    LDX $7CBF                ; A783  $AE $BF $7C
-    STX $AA                  ; A786  $86 $AA
-    PLA                      ; A788  $68
-    CMP #$5B                 ; A789  $C9 $5B
-    BCC L1679D               ; A78B  $90 $10
-    CMP #$6C                 ; A78D  $C9 $6C
-    BCC L16799               ; A78F  $90 $08
-    CMP #$74                 ; A791  $C9 $74
-    BCC L1679D               ; A793  $90 $08
-    LDA #$67                 ; A795  $A9 $67
-    BNE L1679F               ; A797  $D0 $06
+    PHA
+    AND #$7F
+    STA $64
+    LDX #$00
+    STX $AA
+    LDX #$05
+    JSR L3FD8C
+    LDX $7CBF
+    STX $AA
+    PLA
+    CMP #$5B
+    BCC L1679D
+    CMP #$6C
+    BCC L16799
+    CMP #$74
+    BCC L1679D
+    LDA #$67
+    BNE L1679F
 L16799:
-    LDA #$66                 ; A799  $A9 $66
-    BNE L1679F               ; A79B  $D0 $02
+    LDA #$66
+    BNE L1679F
 L1679D:
-    LDA #$3C                 ; A79D  $A9 $3C
+    LDA #$3C
 L1679F:
-    STA $64                  ; A79F  $85 $64
-    LDA #$B2                 ; A7A1  $A9 $B2
-    STA $63                  ; A7A3  $85 $63
-    LDA #$95                 ; A7A5  $A9 $95
-    STA $62                  ; A7A7  $85 $62
-    LDX #$05                 ; A7A9  $A2 $05
-    JSR L3FD8C               ; A7AB  $20 $8C $FD
-    LDA #$10                 ; A7AE  $A9 $10
-    STA $45                  ; A7B0  $85 $45
-    STA $44                  ; A7B2  $85 $44
-    LDA #$00                 ; A7B4  $A9 $00
-    STA $6F                  ; A7B6  $85 $6F
-    JSR $FB1B                ; A7B8  $20 $1B $FB
-    JSR $AA41                ; A7BB  $20 $41 $AA
-    LDY $AB                  ; A7BE  $A4 $AB
-    JSR $A9C4                ; A7C0  $20 $C4 $A9
-    JSR L3FD46               ; A7C3  $20 $46 $FD
-    JSR $AA48                ; A7C6  $20 $48 $AA
-    LDA $AD                  ; A7C9  $A5 $AD
-    BEQ L167D0               ; A7CB  $F0 $03
-    JMP $A752                ; A7CD  $4C $52 $A7
+    STA $64
+    LDA #$B2
+    STA $63
+    LDA #$95
+    STA $62
+    LDX #$05
+    JSR L3FD8C
+    LDA #$10
+    STA $45
+    STA $44
+    LDA #$00
+    STA $6F
+    JSR $FB1B
+    JSR $AA41
+    LDY $AB
+    JSR $A9C4
+    JSR L3FD46
+    JSR $AA48
+    LDA $AD
+    BEQ L167D0
+    JMP $A752
 L167D0:
-    JSR L3FD46               ; A7D0  $20 $46 $FD
-    LDA #$00                 ; A7D3  $A9 $00
-    STA $64                  ; A7D5  $85 $64
-    JSR L16B4F               ; A7D7  $20 $4F $AB
+    JSR L3FD46
+    LDA #$00
+    STA $64
+    JSR L16B4F
 L167DA:
-    JSR L3FD5B               ; A7DA  $20 $5B $FD
-    INC $9E                  ; A7DD  $E6 $9E
-    LDA $9E                  ; A7DF  $A5 $9E
-    CMP #$04                 ; A7E1  $C9 $04
-    BEQ L167E8               ; A7E3  $F0 $03
-    JMP L1653B               ; A7E5  $4C $3B $A5
+    JSR L3FD5B
+    INC $9E
+    LDA $9E
+    CMP #$04
+    BEQ L167E8
+    JMP L1653B
 L167E8:
-    RTS                      ; A7E8  $60
+    RTS
 
 ;; sub start ;;
-    LDY $44                  ; A7E9  $A4 $44
-    LDA ($7A),Y              ; A7EB  $B1 $7A
-    STA $00                  ; A7ED  $85 $00
-    INY                      ; A7EF  $C8
-    LDA ($7A),Y              ; A7F0  $B1 $7A
-    STA $01                  ; A7F2  $85 $01
-    JSR $FCC3                ; A7F4  $20 $C3 $FC
-    LDA $04                  ; A7F7  $A5 $04
-    STA $4C                  ; A7F9  $85 $4C
-    LDA $05                  ; A7FB  $A5 $05
-    STA $4D                  ; A7FD  $85 $4D
-    LDX #$00                 ; A7FF  $A2 $00
-    LDA $4A                  ; A801  $A5 $4A
-    JSR $FD11                ; A803  $20 $11 $FD
-    STA $00                  ; A806  $85 $00
-    LDA $4C                  ; A808  $A5 $4C
-    STA $02                  ; A80A  $85 $02
-    LDA $4D                  ; A80C  $A5 $4D
-    STA $03                  ; A80E  $85 $03
-    LDA #$00                 ; A810  $A9 $00
-    STA $01                  ; A812  $85 $01
-    JSR $A9B6                ; A814  $20 $B6 $A9
-    BCC L16841               ; A817  $90 $28
-    LDY $48                  ; A819  $A4 $48
-    LDA ($7A),Y              ; A81B  $B1 $7A
-    LDY $44                  ; A81D  $A4 $44
-    CLC                      ; A81F  $18
-    ADC ($7A),Y              ; A820  $71 $7A
-    STA ($7A),Y              ; A822  $91 $7A
-    LDA #$00                 ; A824  $A9 $00
-    INY                      ; A826  $C8
-    ADC ($7A),Y              ; A827  $71 $7A
-    STA ($7A),Y              ; A829  $91 $7A
-    LDX $AD                  ; A82B  $A6 $AD
-    LDA $44                  ; A82D  $A5 $44
-    CMP #$0A                 ; A82F  $C9 $0A
-    BNE A83A                 ; A831  $D0 $07
-    LDA #$5D                 ; A833  $A9 $5D
-    STA $7FBA,X              ; A835  $9D $BA $7F
-    BNE A83F                 ; A838  $D0 $05
+    LDY $44
+    LDA ($7A),Y
+    STA $00
+    INY
+    LDA ($7A),Y
+    STA $01
+    JSR DoDivision
+    LDA $04
+    STA $4C
+    LDA $05
+    STA $4D
+    LDX #$00
+    LDA $4A
+    JSR $FD11
+    STA $00
+    LDA $4C
+    STA $02
+    LDA $4D
+    STA $03
+    LDA #$00
+    STA $01
+    JSR $A9B6
+    BCC L16841
+    LDY $48
+    LDA ($7A),Y
+    LDY $44
+    CLC
+    ADC ($7A),Y
+    STA ($7A),Y
+    LDA #$00
+    INY
+    ADC ($7A),Y
+    STA ($7A),Y
+    LDX $AD
+    LDA $44
+    CMP #$0A
+    BNE A83A
+    LDA #$5D
+    STA $7FBA,X
+    BNE A83F
 A83A:
-    LDA #$5E                 ; A83A  $A9 $5E
-    STA $7FBA,X              ; A83C  $9D $BA $7F
+    LDA #$5E
+    STA $7FBA,X
 A83F:
-    INC $AD                  ; A83F  $E6 $AD
+    INC $AD
 L16841:
-    RTS                      ; A841  $60
+    RTS
 
 ;; sub start ;;
-    LDY $9E                  ; A842  $A4 $9E
-    LDA ($44),Y              ; A844  $B1 $44
-    BEQ L1686C               ; A846  $F0 $24
-    CLC                      ; A848  $18
-    ADC $22                  ; A849  $65 $22
-    ADC $46                  ; A84B  $65 $46
-    LDY $47                  ; A84D  $A4 $47
-    SBC ($7E),Y              ; A84F  $F1 $7E
-    SBC #$0A                 ; A851  $E9 $0A
-    BCC L1686C               ; A853  $90 $17
-    INY                      ; A855  $C8
-    ADC ($7E),Y              ; A856  $71 $7E
-    CMP #$64                 ; A858  $C9 $64
-    BCC A86A                 ; A85A  $90 $0E
-    DEY                      ; A85C  $88
-    LDA ($7E),Y              ; A85D  $B1 $7E
-    TAX                      ; A85F  $AA
-    INX                      ; A860  $E8
-    JSR $A86D                ; A861  $20 $6D $A8
-    TXA                      ; A864  $8A
-    STA ($7E),Y              ; A865  $91 $7E
-    INY                      ; A867  $C8
-    LDA #$00                 ; A868  $A9 $00
+    LDY $9E
+    LDA ($44),Y
+    BEQ L1686C
+    CLC
+    ADC $22
+    ADC $46
+    LDY $47
+    SBC ($7E),Y
+    SBC #$0A
+    BCC L1686C
+    INY
+    ADC ($7E),Y
+    CMP #$64
+    BCC A86A
+    DEY
+    LDA ($7E),Y
+    TAX
+    INX
+    JSR $A86D
+    TXA
+    STA ($7E),Y
+    INY
+    LDA #$00
 A86A:
-    STA ($7E),Y              ; A86A  $91 $7E
+    STA ($7E),Y
 L1686C:
-    RTS                      ; A86C  $60
+    RTS
 ;;----------------;;
-    CPX #$10                 ; A86D  $E0 $10
-    BCC A873                 ; A86F  $90 $02
-    LDX #$0F                 ; A871  $A2 $0F
+    CPX #$10
+    BCC A873
+    LDX #$0F
 A873:
-    RTS                      ; A873  $60
+    RTS
 
 ;; sub start ;;
-    CLC                      ; A874  $18
-    LDA $47                  ; A875  $A5 $47
-    ADC #$10                 ; A877  $69 $10
-    STA $48                  ; A879  $85 $48
-    CLC                      ; A87B  $18
-    LDA $4A                  ; A87C  $A5 $4A
-    ADC #$10                 ; A87E  $69 $10
-    STA $4B                  ; A880  $85 $4B
-    LDX #$00                 ; A882  $A2 $00
-    LDA $46                  ; A884  $A5 $46
-    JSR $FD11                ; A886  $20 $11 $FD
-    STA $46                  ; A889  $85 $46
-    LDY $9E                  ; A88B  $A4 $9E
-    SEC                      ; A88D  $38
-    LDA ($44),Y              ; A88E  $B1 $44
-    BEQ L16903               ; A890  $F0 $71
-    SBC $46                  ; A892  $E5 $46
-    BCC L16903               ; A894  $90 $6D
-    LDY $47                  ; A896  $A4 $47
-    LDA ($7A),Y              ; A898  $B1 $7A
-    TAX                      ; A89A  $AA
-    INX                      ; A89B  $E8
-    TXA                      ; A89C  $8A
-    JSR $AA3A                ; A89D  $20 $3A $AA
-    STA ($7A),Y              ; A8A0  $91 $7A
-    LDY $48                  ; A8A2  $A4 $48
-    LDA ($7A),Y              ; A8A4  $B1 $7A
-    TAX                      ; A8A6  $AA
-    INX                      ; A8A7  $E8
-    TXA                      ; A8A8  $8A
-    JSR $AA3A                ; A8A9  $20 $3A $AA
-    STA ($7A),Y              ; A8AC  $91 $7A
-    LDX $AD                  ; A8AE  $A6 $AD
-    LDA $47                  ; A8B0  $A5 $47
-    SEC                      ; A8B2  $38
-    SBC #$13                 ; A8B3  $E9 $13
-    BEQ L168BD               ; A8B5  $F0 $06
-    BCS L168C1               ; A8B7  $B0 $08
-    LDA #$5F                 ; A8B9  $A9 $5F
-    BNE L168C3               ; A8BB  $D0 $06
+    CLC
+    LDA $47
+    ADC #$10
+    STA $48
+    CLC
+    LDA $4A
+    ADC #$10
+    STA $4B
+    LDX #$00
+    LDA $46
+    JSR $FD11
+    STA $46
+    LDY $9E
+    SEC
+    LDA ($44),Y
+    BEQ L16903
+    SBC $46
+    BCC L16903
+    LDY $47
+    LDA ($7A),Y
+    TAX
+    INX
+    TXA
+    JSR $AA3A
+    STA ($7A),Y
+    LDY $48
+    LDA ($7A),Y
+    TAX
+    INX
+    TXA
+    JSR $AA3A
+    STA ($7A),Y
+    LDX $AD
+    LDA $47
+    SEC
+    SBC #$13
+    BEQ L168BD
+    BCS L168C1
+    LDA #$5F
+    BNE L168C3
 L168BD:
-    LDA #$60                 ; A8BD  $A9 $60
-    BNE L168C3               ; A8BF  $D0 $02
+    LDA #$60
+    BNE L168C3
 L168C1:
-    LDA #$61                 ; A8C1  $A9 $61
+    LDA #$61
 L168C3:
-    STA $7FBA,X              ; A8C3  $9D $BA $7F
-    INC $AD                  ; A8C6  $E6 $AD
-    LDX #$00                 ; A8C8  $A2 $00
-    LDA $49                  ; A8CA  $A5 $49
-    JSR $FD11                ; A8CC  $20 $11 $FD
-    BNE L16903               ; A8CF  $D0 $32
-    LDY $4A                  ; A8D1  $A4 $4A
-    LDA ($7A),Y              ; A8D3  $B1 $7A
-    CMP #$01                 ; A8D5  $C9 $01
-    BEQ L16903               ; A8D7  $F0 $2A
-    TAX                      ; A8D9  $AA
-    DEX                      ; A8DA  $CA
-    TXA                      ; A8DB  $8A
-    STA ($7A),Y              ; A8DC  $91 $7A
-    LDY $4B                  ; A8DE  $A4 $4B
-    LDA ($7A),Y              ; A8E0  $B1 $7A
-    TAX                      ; A8E2  $AA
-    DEX                      ; A8E3  $CA
-    TXA                      ; A8E4  $8A
-    STA ($7A),Y              ; A8E5  $91 $7A
-    LDX $AD                  ; A8E7  $A6 $AD
-    LDA $4A                  ; A8E9  $A5 $4A
-    SEC                      ; A8EB  $38
-    SBC #$12                 ; A8EC  $E9 $12
-    BEQ A8F6                 ; A8EE  $F0 $06
-    BCS A8FA                 ; A8F0  $B0 $08
-    LDA #$5F                 ; A8F2  $A9 $5F
-    BNE A8FC                 ; A8F4  $D0 $06
+    STA $7FBA,X
+    INC $AD
+    LDX #$00
+    LDA $49
+    JSR $FD11
+    BNE L16903
+    LDY $4A
+    LDA ($7A),Y
+    CMP #$01
+    BEQ L16903
+    TAX
+    DEX
+    TXA
+    STA ($7A),Y
+    LDY $4B
+    LDA ($7A),Y
+    TAX
+    DEX
+    TXA
+    STA ($7A),Y
+    LDX $AD
+    LDA $4A
+    SEC
+    SBC #$12
+    BEQ A8F6
+    BCS A8FA
+    LDA #$5F
+    BNE A8FC
 A8F6:
-    LDA #$63                 ; A8F6  $A9 $63
-    BNE A8FC                 ; A8F8  $D0 $02
+    LDA #$63
+    BNE A8FC
 A8FA:
-    LDA #$60                 ; A8FA  $A9 $60
+    LDA #$60
 A8FC:
-    ORA #$80                 ; A8FC  $09 $80
-    STA $7FBA,X              ; A8FE  $9D $BA $7F
-    INC $AD                  ; A901  $E6 $AD
+    ORA #$80
+    STA $7FBA,X
+    INC $AD
 L16903:
-    RTS                      ; A903  $60
+    RTS
 
 ;; sub start ;;
-    CLC                      ; A904  $18
-    LDA $46                  ; A905  $A5 $46
-    ADC #$10                 ; A907  $69 $10
-    STA $47                  ; A909  $85 $47
-    LDX #$00                 ; A90B  $A2 $00
-    LDA $44                  ; A90D  $A5 $44
-    JSR $FD11                ; A90F  $20 $11 $FD
-    STA $48                  ; A912  $85 $48
-    SEC                      ; A914  $38
-    LDA $45                  ; A915  $A5 $45
-    BEQ L16955               ; A917  $F0 $3C
-    SBC $48                  ; A919  $E5 $48
-    BCS L16955               ; A91B  $B0 $38
-    LDY $46                  ; A91D  $A4 $46
-    CPY #$11                 ; A91F  $C0 $11
-    BEQ L1695B               ; A921  $F0 $38
+    CLC
+    LDA $46
+    ADC #$10
+    STA $47
+    LDX #$00
+    LDA $44
+    JSR $FD11
+    STA $48
+    SEC
+    LDA $45
+    BEQ L16955
+    SBC $48
+    BCS L16955
+    LDY $46
+    CPY #$11
+    BEQ L1695B
 L16923:
-    LDA ($7A),Y              ; A923  $B1 $7A
-    TAX                      ; A925  $AA
-    INX                      ; A926  $E8
-    TXA                      ; A927  $8A
-    JSR $AA3A                ; A928  $20 $3A $AA
-    STA ($7A),Y              ; A92B  $91 $7A
-    LDY $47                  ; A92D  $A4 $47
-    LDA ($7A),Y              ; A92F  $B1 $7A
-    TAX                      ; A931  $AA
-    INX                      ; A932  $E8
-    TXA                      ; A933  $8A
-    JSR $AA3A                ; A934  $20 $3A $AA
-    STA ($7A),Y              ; A937  $91 $7A
-    LDX $AD                  ; A939  $A6 $AD
-    LDA $46                  ; A93B  $A5 $46
-    SEC                      ; A93D  $38
-    SBC #$12                 ; A93E  $E9 $12
-    BEQ A948                 ; A940  $F0 $06
-    BCS A94C                 ; A942  $B0 $08
-    LDA #$62                 ; A944  $A9 $62
-    BNE A94E                 ; A946  $D0 $06
+    LDA ($7A),Y
+    TAX
+    INX
+    TXA
+    JSR $AA3A
+    STA ($7A),Y
+    LDY $47
+    LDA ($7A),Y
+    TAX
+    INX
+    TXA
+    JSR $AA3A
+    STA ($7A),Y
+    LDX $AD
+    LDA $46
+    SEC
+    SBC #$12
+    BEQ A948
+    BCS A94C
+    LDA #$62
+    BNE A94E
 A948:
-    LDA #$63                 ; A948  $A9 $63
-    BNE A94E                 ; A94A  $D0 $02
+    LDA #$63
+    BNE A94E
 A94C:
-    LDA #$64                 ; A94C  $A9 $64
+    LDA #$64
 A94E:
-    STA $7FBA,X              ; A94E  $9D $BA $7F
-    INC $AD                  ; A951  $E6 $AD
-    BNE L1695B               ; A953  $D0 $06
+    STA $7FBA,X
+    INC $AD
+    BNE L1695B
 L16955:
-    LDY $46                  ; A955  $A4 $46
-    CPY #$11                 ; A957  $C0 $11
-    BEQ L16923               ; A959  $F0 $C8
+    LDY $46
+    CPY #$11
+    BEQ L16923
 L1695B:
-    RTS                      ; A95B  $60
+    RTS
 
 ;; sub start ;;
-    STA $0A                  ; A95C  $85 $0A
-    ASL A                    ; A95E  $0A
-    TAY                      ; A95F  $A8
-    LDA ($7E),Y              ; A960  $B1 $7E
-    STA $53                  ; A962  $85 $53
-    SEC                      ; A964  $38
-    LDA $52                  ; A965  $A5 $52
-    SBC $53                  ; A967  $E5 $53
-    SBC #$0A                 ; A969  $E9 $0A
-    BCC L16991               ; A96B  $90 $24
-    CLC                      ; A96D  $18
-    INY                      ; A96E  $C8
-    ADC ($7E),Y              ; A96F  $71 $7E
-    CMP #$64                 ; A971  $C9 $64
-    BCC L1698F               ; A973  $90 $1A
-    DEY                      ; A975  $88
-    LDA ($7E),Y              ; A976  $B1 $7E
-    TAX                      ; A978  $AA
-    INX                      ; A979  $E8
-    JSR $A86D                ; A97A  $20 $6D $A8
-    TXA                      ; A97D  $8A
-    STA ($7E),Y              ; A97E  $91 $7E
-    INY                      ; A980  $C8
-    LDX $AD                  ; A981  $A6 $AD
-    CLC                      ; A983  $18
-    LDA $0A                  ; A984  $A5 $0A
-    ADC #$6C                 ; A986  $69 $6C
-    STA $7FBA,X              ; A988  $9D $BA $7F
-    INC $AD                  ; A98B  $E6 $AD
-    LDA #$00                 ; A98D  $A9 $00
+    STA $0A
+    ASL A
+    TAY
+    LDA ($7E),Y
+    STA $53
+    SEC
+    LDA $52
+    SBC $53
+    SBC #$0A
+    BCC L16991
+    CLC
+    INY
+    ADC ($7E),Y
+    CMP #$64
+    BCC L1698F
+    DEY
+    LDA ($7E),Y
+    TAX
+    INX
+    JSR $A86D
+    TXA
+    STA ($7E),Y
+    INY
+    LDX $AD
+    CLC
+    LDA $0A
+    ADC #$6C
+    STA $7FBA,X
+    INC $AD
+    LDA #$00
 L1698F:
-    STA ($7E),Y              ; A98F  $91 $7E
+    STA ($7E),Y
 L16991:
-    RTS                      ; A991  $60
+    RTS
 
 ;; sub start ;;
-    LDA #$A9                 ; A992  $A9 $A9
-    STA $0102                ; A994  $8D $02 $01
-    LDA #$A2                 ; A997  $A9 $A2
-    STA $0101                ; A999  $8D $01 $01
-    LDA #$4C                 ; A99C  $A9 $4C
-    STA $0100                ; A99E  $8D $00 $01
-    RTS                      ; A9A1  $60
+    LDA #$A9
+    STA $0102
+    LDA #$A2
+    STA $0101
+    LDA #$4C
+    STA $0100
+    RTS
 
 L169A2:
-    PHP                      ; A9A2  $08
-    PHA                      ; A9A3  $48
-    TXA                      ; A9A4  $8A
-    PHA                      ; A9A5  $48
-    TYA                      ; A9A6  $98
-    PHA                      ; A9A7  $48
-    JSR L1645E               ; A9A8  $20 $5E $A4
-    LDA #$00                 ; A9AB  $A9 $00
-    STA $AC                  ; A9AD  $85 $AC
-    PLA                      ; A9AF  $68
-    TAY                      ; A9B0  $A8
-    PLA                      ; A9B1  $68
-    TAX                      ; A9B2  $AA
-    PLA                      ; A9B3  $68
-    PLP                      ; A9B4  $28
-    RTI                      ; A9B5  $40
+    PHP
+    PHA
+    TXA
+    PHA
+    TYA
+    PHA
+    JSR L1645E
+    LDA #$00
+    STA $AC
+    PLA
+    TAY
+    PLA
+    TAX
+    PLA
+    PLP
+    RTI
 
 ;; sub start ;;
-    SEC                      ; A9B6  $38
-    LDA $00                  ; A9B7  $A5 $00
-    SBC $02                  ; A9B9  $E5 $02
-    STA $04                  ; A9BB  $85 $04
-    LDA $01                  ; A9BD  $A5 $01
-    SBC $03                  ; A9BF  $E5 $03
-    ORA $04                  ; A9C1  $05 $04
-    RTS                      ; A9C3  $60
+    SEC
+    LDA $00
+    SBC $02
+    STA $04
+    LDA $01
+    SBC $03
+    ORA $04
+    RTS
 
 ;; sub start ;;
-    TYA                      ; A9C4  $98
-    BEQ L169D2               ; A9C5  $F0 $0B
-    STA $7CB9                ; A9C7  $8D $B9 $7C
+    TYA
+    BEQ L169D2
+    STA $7CB9
 L169CA:
-    JSR L1645E               ; A9CA  $20 $5E $A4
-    DEC $7CB9                ; A9CD  $CE $B9 $7C
-    BNE L169CA               ; A9D0  $D0 $F8
+    JSR L1645E
+    DEC $7CB9
+    BNE L169CA
 L169D2:
-    RTS                      ; A9D2  $60
+    RTS
 
 ;; sub start ;;
-    BMI L16A34               ; A9D3  $30 $5F
-    TAX                      ; A9D5  $AA
-    LDA $B780,X              ; A9D6  $BD $80 $B7
-    STA $00                  ; A9D9  $85 $00
-    LDA #$08                 ; A9DB  $A9 $08
-    STA $02                  ; A9DD  $85 $02
-    LDA #$00                 ; A9DF  $A9 $00
-    STA $01                  ; A9E1  $85 $01
-    STA $03                  ; A9E3  $85 $03
-    JSR $FC98                ; A9E5  $20 $98 $FC
-    CLC                      ; A9E8  $18
-    LDA $04                  ; A9E9  $A5 $04
-    ADC #$00                 ; A9EB  $69 $00
-    STA $4E                  ; A9ED  $85 $4E
-    LDA $05                  ; A9EF  $A5 $05
-    ADC #$B8                 ; A9F1  $69 $B8
-    STA $4F                  ; A9F3  $85 $4F
-    LDX #$00                 ; A9F5  $A2 $00
-    LDA #$63                 ; A9F7  $A9 $63
-    JSR $FD11                ; A9F9  $20 $11 $FD
-    STA $00                  ; A9FC  $85 $00
-    LDY #$07                 ; A9FE  $A0 $07
-L16A00:
-    LDA $AA4F,Y              ; AA00  $B9 $4F $AA
-    CMP $00                  ; AA03  $C5 $00
-    BCS L16A0A               ; AA05  $B0 $03
-    DEY                      ; AA07  $88
-    BPL L16A00               ; AA08  $10 $F6
-L16A0A:
-    LDA ($4E),Y              ; AA0A  $B1 $4E
-    LDX $0C                  ; AA0C  $A6 $0C
-    CMP #$F0                 ; AA0E  $C9 $F0
-    BCC L16A36               ; AA10  $90 $24
-    AND #$0F                 ; AA12  $29 $0F
-    ASL A                    ; AA14  $0A
-    CLC                      ; AA15  $18
-    ADC #$E0                 ; AA16  $69 $E0
-    STA $00                  ; AA18  $85 $00
-    LDA #$00                 ; AA1A  $A9 $00
-    ADC #$B9                 ; AA1C  $69 $B9
-    STA $01                  ; AA1E  $85 $01
-    CLC                      ; AA20  $18
-    LDY #$00                 ; AA21  $A0 $00
-    LDA ($00),Y              ; AA23  $B1 $00
-    ADC $7CC0                ; AA25  $6D $C0 $7C
-    STA $7CC0                ; AA28  $8D $C0 $7C
-    INY                      ; AA2B  $C8
-    LDA ($00),Y              ; AA2C  $B1 $00
-    ADC $7CC1                ; AA2E  $6D $C1 $7C
-    STA $7CC1                ; AA31  $8D $C1 $7C
-L16A34:
-    LDA #$00                 ; AA34  $A9 $00
-L16A36:
-    STA $7B62,X              ; AA36  $9D $62 $7B
-    RTS                      ; AA39  $60
+;; [A9D3]
+
+TheNextThing:
+    BMI @SetZero         ; branch if high bit set
+    TAX                  ; transfer A to X and now check the second half of this LUT!
+    LDA $B780,X
+    STA $00
+    LDA #$08
+    STA $02
+    LDA #$00
+    STA $01
+    STA $03
+    JSR $FC98
+    CLC
+    LDA $04
+    ADC #$00
+    STA $4E
+    LDA $05
+    ADC #$B8
+    STA $4F
+    LDX #$00
+    LDA #$63
+    JSR $FD11
+    STA $00
+    LDY #$07
+@L16A00:
+    LDA $AA4F,Y
+    CMP $00
+    BCS @L16A0A
+    DEY
+    BPL @L16A00
+@L16A0A:
+    LDA ($4E),Y
+    LDX $0C
+    CMP #$F0
+    BCC @End
+    AND #$0F
+    ASL A
+    CLC
+    ADC #$E0
+    STA $00
+    LDA #$00
+    ADC #$B9
+    STA $01
+    CLC
+    LDY #$00
+    LDA ($00),Y
+    ADC $7CC0
+    STA $7CC0
+    INY
+    LDA ($00),Y
+    ADC $7CC1
+    STA $7CC1
+
+   @SetZero:
+    LDA #$00
+   @End: ; L16A36:
+    STA $7B62,X
+    RTS
 
 ;; sub start ;;
-    CMP #$64                 ; AA3A  $C9 $64
-    BCC L16A40               ; AA3C  $90 $02
-    LDA #$63                 ; AA3E  $A9 $63
+    CMP #$64
+    BCC L16A40
+    LDA #$63
 L16A40:
-    RTS                      ; AA40  $60
+    RTS
 
 ;; sub start ;;
-    LDA #$04                 ; AA41  $A9 $04
-    STA $64                  ; AA43  $85 $64
-    JMP L16A57               ; AA45  $4C $57 $AA
+    LDA #$04
+    STA $64
+    JMP L16A57
 
 ;; sub start ;;
-    LDA #$04                 ; AA48  $A9 $04
-    STA $64                  ; AA4A  $85 $64
-    JMP L16B4F               ; AA4C  $4C $4F $AB
+    LDA #$04
+    STA $64
+    JMP L16B4F
 
 ;;--------data block--------
-.byte $64,$50,$3C,$28,$1E,$14,$0A,$05 ; AA51
+.byte $64,$50,$3C,$28,$1E,$14,$0A,$05
 
 L16A57:
-    JSR L3FD46               ; AA57  $20 $46 $FD
-    LDA #$AB                 ; AA5A  $A9 $AB
-    STA $63                  ; AA5C  $85 $63
-    LDA #$F8                 ; AA5E  $A9 $F8
-    STA $62                  ; AA60  $85 $62
-    JSR $ABD8                ; AA62  $20 $D8 $AB
-    LDY #$00                 ; AA65  $A0 $00
+    JSR L3FD46
+    LDA #$AB
+    STA $63
+    LDA #$F8
+    STA $62
+    JSR $ABD8
+    LDY #$00
 L16A67:
-    LDA ($78),Y              ; AA67  $B1 $78
-    STA $0052,Y              ; AA69  $99 $52 $00
-    PHA                      ; AA6C  $48
-    INY                      ; AA6D  $C8
-    CPY #$04                 ; AA6E  $C0 $04
-    BNE L16A67               ; AA70  $D0 $F5
-    LDY #$00                 ; AA72  $A0 $00
-    STY $5C                  ; AA74  $84 $5C
+    LDA ($78),Y
+    STA $0052,Y
+    PHA
+    INY
+    CPY #$04
+    BNE L16A67
+    LDY #$00
+    STY $5C
 L16A76:
-    JSR $ABD2                ; AA76  $20 $D2 $AB
-    JSR $ABAF                ; AA79  $20 $AF $AB
-    LDA PpuData_2007         ; AA7C  $AD $07 $20
-    LDX $52                  ; AA7F  $A6 $52
-    LDY $5C                  ; AA81  $A4 $5C
+    JSR $ABD2
+    JSR $ABAF
+    LDA PpuData_2007
+    LDX $52
+    LDY $5C
 L16A83:
-    LDA PpuData_2007         ; AA83  $AD $07 $20
-    STA ($7C),Y              ; AA86  $91 $7C
-    INY                      ; AA88  $C8
-    DEX                      ; AA89  $CA
-    BNE L16A83               ; AA8A  $D0 $F7
-    STY $5C                  ; AA8C  $84 $5C
-    JSR L3FD46               ; AA8E  $20 $46 $FD
-    CLC                      ; AA91  $18
-    LDA $54                  ; AA92  $A5 $54
-    ADC #$20                 ; AA94  $69 $20
-    STA $54                  ; AA96  $85 $54
-    LDA $55                  ; AA98  $A5 $55
-    ADC #$00                 ; AA9A  $69 $00
-    STA $55                  ; AA9C  $85 $55
-    DEC $53                  ; AA9E  $C6 $53
-    BNE L16A76               ; AAA0  $D0 $D4
-    LDY $5C                  ; AAA2  $A4 $5C
-    CLC                      ; AAA4  $18
-    TYA                      ; AAA5  $98
-    ADC $7C                  ; AAA6  $65 $7C
-    STA $7C                  ; AAA8  $85 $7C
-    LDA #$00                 ; AAAA  $A9 $00
-    ADC $7D                  ; AAAC  $65 $7D
-    STA $7D                  ; AAAE  $85 $7D
-    LDY #$03                 ; AAB0  $A0 $03
+    LDA PpuData_2007
+    STA ($7C),Y
+    INY
+    DEX
+    BNE L16A83
+    STY $5C
+    JSR L3FD46
+    CLC
+    LDA $54
+    ADC #$20
+    STA $54
+    LDA $55
+    ADC #$00
+    STA $55
+    DEC $53
+    BNE L16A76
+    LDY $5C
+    CLC
+    TYA
+    ADC $7C
+    STA $7C
+    LDA #$00
+    ADC $7D
+    STA $7D
+    LDY #$03
 L16AB2:
-    PLA                      ; AAB2  $68
-    STA $0052,Y              ; AAB3  $99 $52 $00
-    DEY                      ; AAB6  $88
-    BPL L16AB2               ; AAB7  $10 $F9
-    LDA #$03                 ; AAB9  $A9 $03
-    STA $44                  ; AABB  $85 $44
-    DEC $52                  ; AABD  $C6 $52
-    DEC $52                  ; AABF  $C6 $52
-    DEC $53                  ; AAC1  $C6 $53
-    DEC $53                  ; AAC3  $C6 $53
+    PLA
+    STA $0052,Y
+    DEY
+    BPL L16AB2
+    LDA #$03
+    STA $44
+    DEC $52
+    DEC $52
+    DEC $53
+    DEC $53
 L16AC5:
-    JSR $ABD2                ; AAC5  $20 $D2 $AB
-    LDA $44                  ; AAC8  $A5 $44
-    CMP #$03                 ; AACA  $C9 $03
-    BNE L16ADF               ; AACC  $D0 $11
-    LDA #$F7                 ; AACE  $A9 $F7
-    STA $64                  ; AAD0  $85 $64
-    LDA #$F8                 ; AAD2  $A9 $F8
-    STA $65                  ; AAD4  $85 $65
-    LDA #$F9                 ; AAD6  $A9 $F9
-    STA $67                  ; AAD8  $85 $67
-    JSR $AB08                ; AADA  $20 $08 $AB
-    BNE L16B02               ; AADD  $D0 $23
+    JSR $ABD2
+    LDA $44
+    CMP #$03
+    BNE L16ADF
+    LDA #$F7
+    STA $64
+    LDA #$F8
+    STA $65
+    LDA #$F9
+    STA $67
+    JSR $AB08
+    BNE L16B02
 L16ADF:
-    CMP #$02                 ; AADF  $C9 $02
-    BNE L16AEC               ; AAE1  $D0 $09
-    LDA #$00                 ; AAE3  $A9 $00
-    STA $48                  ; AAE5  $85 $48
-    JSR L16B25               ; AAE7  $20 $25 $AB
-    BNE L16B02               ; AAEA  $D0 $16
+    CMP #$02
+    BNE L16AEC
+    LDA #$00
+    STA $48
+    JSR L16B25
+    BNE L16B02
 L16AEC:
-    CMP #$01                 ; AAEC  $C9 $01
-    BNE L16AFF               ; AAEE  $D0 $0F
-    LDA #$FC                 ; AAF0  $A9 $FC
-    STA $64                  ; AAF2  $85 $64
-    LDA #$FD                 ; AAF4  $A9 $FD
-    STA $65                  ; AAF6  $85 $65
-    LDA #$FE                 ; AAF8  $A9 $FE
-    STA $67                  ; AAFA  $85 $67
-    JSR $AB08                ; AAFC  $20 $08 $AB
+    CMP #$01
+    BNE L16AFF
+    LDA #$FC
+    STA $64
+    LDA #$FD
+    STA $65
+    LDA #$FE
+    STA $67
+    JSR $AB08
 L16AFF:
-    JMP L1645E               ; AAFF  $4C $5E $A4
+    JMP L1645E
 L16B02:
-    JSR L3FD46               ; AB02  $20 $46 $FD
-    JMP L16AC5               ; AB05  $4C $C5 $AA
+    JSR L3FD46
+    JMP L16AC5
 
 ;; sub start ;;
-    JSR $ABAF                ; AB08  $20 $AF $AB
-    LDA $64                  ; AB0B  $A5 $64
-    STA PpuData_2007         ; AB0D  $8D $07 $20
-    LDY $52                  ; AB10  $A4 $52
-    LDA $65                  ; AB12  $A5 $65
+    JSR $ABAF
+    LDA $64
+    STA PpuData_2007
+    LDY $52
+    LDA $65
 L16B14:
-    STA PpuData_2007         ; AB14  $8D $07 $20
-    DEY                      ; AB17  $88
-    BNE L16B14               ; AB18  $D0 $FA
-    LDA $67                  ; AB1A  $A5 $67
-    STA PpuData_2007         ; AB1C  $8D $07 $20
-    JSR $ABC4                ; AB1F  $20 $C4 $AB
-    DEC $44                  ; AB22  $C6 $44
-    RTS                      ; AB24  $60
+    STA PpuData_2007
+    DEY
+    BNE L16B14
+    LDA $67
+    STA PpuData_2007
+    JSR $ABC4
+    DEC $44
+    RTS
 
 L16B25:
-    JSR $ABAF                ; AB25  $20 $AF $AB
-    LDA #$FA                 ; AB28  $A9 $FA
-    STA PpuData_2007         ; AB2A  $8D $07 $20
-    LDX $48                  ; AB2D  $A6 $48
-    LDY $52                  ; AB2F  $A4 $52
+    JSR $ABAF
+    LDA #$FA
+    STA PpuData_2007
+    LDX $48
+    LDY $52
 L16B31:
-    LDA $7600,X              ; AB31  $BD $00 $76
-    STA PpuData_2007         ; AB34  $8D $07 $20
-    INX                      ; AB37  $E8
-    DEY                      ; AB38  $88
-    BNE L16B31               ; AB39  $D0 $F6
-    LDA #$FB                 ; AB3B  $A9 $FB
-    STA PpuData_2007         ; AB3D  $8D $07 $20
-    JSR $ABC4                ; AB40  $20 $C4 $AB
-    DEC $53                  ; AB43  $C6 $53
-    BEQ L16B4C               ; AB45  $F0 $05
-    STX $48                  ; AB47  $86 $48
-    JMP L16B25               ; AB49  $4C $25 $AB
+    LDA $7600,X
+    STA PpuData_2007
+    INX
+    DEY
+    BNE L16B31
+    LDA #$FB
+    STA PpuData_2007
+    JSR $ABC4
+    DEC $53
+    BEQ L16B4C
+    STX $48
+    JMP L16B25
 L16B4C:
-    DEC $44                  ; AB4C  $C6 $44
-    RTS                      ; AB4E  $60
+    DEC $44
+    RTS
 
 L16B4F:
-    JSR L3FD46               ; AB4F  $20 $46 $FD
-    LDA #$AB                 ; AB52  $A9 $AB
-    STA $63                  ; AB54  $85 $63
-    LDA #$F8                 ; AB56  $A9 $F8
-    STA $62                  ; AB58  $85 $62
-    JSR $ABD8                ; AB5A  $20 $D8 $AB
-    LDY #$00                 ; AB5D  $A0 $00
-    LDA ($78),Y              ; AB5F  $B1 $78
-    STA $52                  ; AB61  $85 $52
-    INY                      ; AB63  $C8
-    LDA ($78),Y              ; AB64  $B1 $78
-    STA $53                  ; AB66  $85 $53
-    INY                      ; AB68  $C8
-    INY                      ; AB69  $C8
-    INY                      ; AB6A  $C8
-    LDA ($78),Y              ; AB6B  $B1 $78
-    STA $54                  ; AB6D  $85 $54
-    INY                      ; AB6F  $C8
-    LDA ($78),Y              ; AB70  $B1 $78
-    STA $55                  ; AB72  $85 $55
+    JSR L3FD46
+    LDA #$AB
+    STA $63
+    LDA #$F8
+    STA $62
+    JSR $ABD8
+    LDY #$00
+    LDA ($78),Y
+    STA $52
+    INY
+    LDA ($78),Y
+    STA $53
+    INY
+    INY
+    INY
+    LDA ($78),Y
+    STA $54
+    INY
+    LDA ($78),Y
+    STA $55
 L16B74:
-    JSR $ABD2                ; AB74  $20 $D2 $AB
-    JSR $ABAF                ; AB77  $20 $AF $AB
-    SEC                      ; AB7A  $38
-    
-;; debugger must have guessed at things here if it never got the chance to run this code right    
-    
+    JSR $ABD2
+    JSR $ABAF
+    SEC
+
+;; debugger must have guessed at things here if it never got the chance to run this code right
+
     ;LDA $007C                ; AB7B  $AD $7C $00
     .byte $AD,$7C,$00
-    
+
     SBC $52                  ; AB7E  $E5 $52
     ;STA $007C                ; AB80  $8D $7C $00
     .byte $8D,$7C,$00
-    
+
     ;LDA $007D                ; AB83  $AD $7D $00
     .byte $AD,$7D,$00
-    
+
     SBC #$00                 ; AB86  $E9 $00
     ;STA $007D                ; AB88  $8D $7D $00
     .byte $8D,$7D,$00
-    
-    LDX $52                  ; AB8B  $A6 $52
-    LDY #$00                 ; AB8D  $A0 $00
+
+    LDX $52
+    LDY #$00
 L16B8F:
-    LDA ($7C),Y              ; AB8F  $B1 $7C
-    STA PpuData_2007         ; AB91  $8D $07 $20
-    INY                      ; AB94  $C8
-    DEX                      ; AB95  $CA
-    BNE L16B8F               ; AB96  $D0 $F7
-    JSR L3FD46               ; AB98  $20 $46 $FD
-    SEC                      ; AB9B  $38
-    LDA $54                  ; AB9C  $A5 $54
-    SBC #$20                 ; AB9E  $E9 $20
-    STA $54                  ; ABA0  $85 $54
-    LDA $55                  ; ABA2  $A5 $55
-    SBC #$00                 ; ABA4  $E9 $00
-    STA $55                  ; ABA6  $85 $55
-    DEC $53                  ; ABA8  $C6 $53
-    BNE L16B74               ; ABAA  $D0 $C8
-    JMP L3FD5B               ; ABAC  $4C $5B $FD
+    LDA ($7C),Y
+    STA PpuData_2007
+    INY
+    DEX
+    BNE L16B8F
+    JSR L3FD46
+    SEC
+    LDA $54
+    SBC #$20
+    STA $54
+    LDA $55
+    SBC #$00
+    STA $55
+    DEC $53
+    BNE L16B74
+    JMP L3FD5B
 
 ;; sub start ;;
-    LDA $55                  ; ABAF  $A5 $55
-    STA PpuAddr_2006         ; ABB1  $8D $06 $20
-    LDA $54                  ; ABB4  $A5 $54
-    STA PpuAddr_2006         ; ABB6  $8D $06 $20
-    LDA #$00                 ; ABB9  $A9 $00
-    STA PpuScroll_2005       ; ABBB  $8D $05 $20
-    LDA $37                  ; ABBE  $A5 $37
-    STA PpuScroll_2005       ; ABC0  $8D $05 $20
-    RTS                      ; ABC3  $60
+    LDA $55
+    STA PpuAddr_2006
+    LDA $54
+    STA PpuAddr_2006
+    LDA #$00
+    STA PpuScroll_2005
+    LDA $37
+    STA PpuScroll_2005
+    RTS
 
 ;; sub start ;;
-    CLC                      ; ABC4  $18
-    LDA $54                  ; ABC5  $A5 $54
-    ADC #$20                 ; ABC7  $69 $20
-    STA $54                  ; ABC9  $85 $54
-    LDA $55                  ; ABCB  $A5 $55
-    ADC #$00                 ; ABCD  $69 $00
-    STA $55                  ; ABCF  $85 $55
-    RTS                      ; ABD1  $60
+    CLC
+    LDA $54
+    ADC #$20
+    STA $54
+    LDA $55
+    ADC #$00
+    STA $55
+    RTS
 
 
 ;; sub start ;;
-    JSR L3FD5B               ; ABD2  $20 $5B $FD
-    JMP L3FA2A               ; ABD5  $4C $2A $FA
+    JSR L3FD5B
+    JMP L3FA2A
 
 ;; sub start ;;
-    LDA #$00                 ; ABD8  $A9 $00
-    STA $65                  ; ABDA  $85 $65
-    LDA $64                  ; ABDC  $A5 $64
-    ASL A                    ; ABDE  $0A
-    ROL $65                  ; ABDF  $26 $65
-    CLC                      ; ABE1  $18
-    ADC $62                  ; ABE2  $65 $62
-    STA $62                  ; ABE4  $85 $62
-    LDA $65                  ; ABE6  $A5 $65
-    ADC $63                  ; ABE8  $65 $63
-    STA $63                  ; ABEA  $85 $63
-    LDY #$00                 ; ABEC  $A0 $00
-    LDA ($62),Y              ; ABEE  $B1 $62
-    STA $78                  ; ABF0  $85 $78
-    INY                      ; ABF2  $C8
-    LDA ($62),Y              ; ABF3  $B1 $62
-    STA $79                  ; ABF5  $85 $79
-    RTS                      ; ABF7  $60
+    LDA #$00
+    STA $65
+    LDA $64
+    ASL A
+    ROL $65
+    CLC
+    ADC $62
+    STA $62
+    LDA $65
+    ADC $63
+    STA $63
+    LDY #$00
+    LDA ($62),Y
+    STA $78
+    INY
+    LDA ($62),Y
+    STA $79
+    RTS
 
 ;;; [ABF0 : 16C00]
 ;.byte $85,$78,$C8,$B1,$62,$85,$79,$60
@@ -4469,52 +4481,28 @@ L16B8F:
 ;; [B6F0 : 17700]
 .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 
+;; B700 is important to level up stats somehow! Indexed by Y, capped at $7F? 
+
 ;; [B700 : 17710]
 .byte $01,$01,$01,$01,$02,$01,$02,$04,$04,$01,$03,$05,$03,$02,$03,$04
-
-;; [B710 : 17720]
 .byte $02,$05,$02,$03,$02,$06,$01,$02,$03,$04,$02,$02,$04,$05,$05,$06
-
-;; [B720 : 17730]
 .byte $06,$07,$05,$05,$06,$05,$06,$03,$05,$03,$05,$01,$02,$04,$07,$04
-
-;; [B730 : 17740]
 .byte $05,$04,$05,$04,$05,$05,$05,$05,$03,$05,$04,$06,$05,$07,$05,$06
-
-;; [B740 : 17750]
 .byte $05,$06,$06,$06,$06,$06,$06,$06,$07,$06,$06,$02,$02,$03,$05,$05
-
-;; [B750 : 17760]
 .byte $04,$04,$05,$06,$06,$07,$05,$06,$07,$06,$06,$06,$07,$07,$07,$01
-
-;; [B760 : 17770]
 .byte $01,$01,$01,$02,$03,$05,$01,$03,$05,$07,$03,$04,$06,$03,$06,$06
-
-;; [B770 : 17780]
 .byte $07,$05,$07,$07,$07,$06,$07,$07,$07,$07,$07,$07,$07,$07,$07,$01
+
+;; and the second half... 
 
 ;; [B780 : 17790]
 .byte $01,$1B,$01,$12,$03,$02,$03,$06,$09,$01,$04,$1F,$18,$16,$17,$1E
-
-;; [B790 : 177A0]
 .byte $14,$07,$04,$05,$02,$0D,$02,$04,$05,$08,$03,$04,$09,$0A,$07,$0D
-
-;; [B7A0 : 177B0]
 .byte $2A,$0F,$08,$0A,$0F,$20,$0B,$04,$09,$05,$09,$06,$07,$15,$0F,$0A
-
-;; [B7B0 : 177C0]
 .byte $06,$1C,$07,$05,$23,$08,$09,$09,$06,$08,$08,$0E,$0A,$0F,$0A,$0E
-
-;; [B7C0 : 177D0]
 .byte $22,$24,$0E,$0A,$0E,$0B,$0C,$0E,$0E,$0C,$0D,$01,$01,$05,$08,$03
-
-;; [B7D0 : 177E0]
 .byte $06,$06,$0A,$2E,$2C,$00,$09,$31,$0F,$29,$2D,$33,$0B,$0B,$0D,$02
-
-;; [B7E0 : 177F0]
 .byte $02,$13,$01,$02,$04,$08,$11,$1A,$28,$2F,$19,$21,$2B,$05,$0D,$0C
-
-;; [B7F0 : 17800]
 .byte $34,$1D,$25,$26,$27,$00,$36,$30,$32,$37,$38,$35,$39,$3A,$3B,$00
 
 ;; [B800 : 17810]
