@@ -5,6 +5,82 @@ ________________________________________________
 0x01100: Starting stats for 4th slot charactes. 
 	End: 0x0137F
 
+0x01590 - Ship sprites
+
+0x08010 - Overworld tileset
+
+0x09010 - Overworld sprites
+
+0x09B10 - Character sprites
+
+0x0C010 - Town tileset, and some others?
+	End of Tilesets: 0x0E010
+
+
+0x1C010 - Enemy graphics
+
+0x1F810 - Battle backdrops
+
+0x20010 - More enemy graphics
+
+0x23C10 - ??? Sparkly stuff for one row
+0x23D10 - ??? Metal walls?
+0x23E10 - ??? More sparkly stuff?
+0x23F10 - ??? Not sure what all this is used for in the game.
+
+0x24010 - Character portraits, some blank space, and the Cursor sprite
+
+0x24A10 - Menu text and icons, box borders
+0x25330 - Battle weapon/magic/ailment sprites
+
+0x25E10 - Firion battle sprites
+0x26010 - Maria battle sprites
+0x26210 - Guy battle sprites
+0x26410 - Minwu battle sprites
+0x26610 - Josef battle sprites
+0x26810 - Gordon battle sprites
+0x26A10 - Leila battle sprites
+0x26C10 - Ricard battle sprites
+0x26E10 - Leon battle sprites
+0x27010 - Fancy letters and some shapes
+
+0x27410 - Perhaps nametable and attribute data for a fancy screen?
+
+0x27810 - Really fancy Final Fantasy title text
+	End of graphics: 0x27A10
+
+
+0x27F10 - 4 tiles of a targeting reticule? 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 0x28600: Start of dialogue.
 	End: 0x2A785
